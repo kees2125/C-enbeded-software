@@ -14,31 +14,40 @@ void init()
 /*
  * Aan de voorkant invoegen
  */
-int add(int data)
-{
-	struct node *pn = (struct node*)malloc(sizeof(struct node));
-
-	if(NULL ==  pn)
+struct node* getNewNode(int data) {
+	struct node* newNode = (struct node*)malloc(sizeof(struct node));
+	if (NULL == newNode)
 	{
 		printf("Out of memory ...");
 	}
 	else
 	{
-		if(NULL == pHead)
-		{
-			pn->data = data;
-			pn->next = NULL;
-			pHead = pn;
-		}
-		else
-		{
-			pn->data = data;
-			pn->next = pHead;
-			pHead = pn;
-		}
+		newNode->data = data;
+		newNode->prev = NULL;
+		newNode->next = NULL;
 	}
-
-	return 1;	
+	return newNode;
+}
+int add(int data)
+{
+	struct node *pn = getNewNode(data);
+	if (pn == NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		if (NULL == pHead)
+		{
+			pHead = pn;
+			return 1;
+		}
+		pHead->previus = pn;
+		pn->next = pHead;
+		pHead = pn;
+		
+	}
+	return 2;	
 }
 
 void show()
@@ -50,6 +59,21 @@ void show()
 	{
 		printf("node nr: %d heeft data [%d]\n",nr++,p->data);
 	}
+}
+void reverseShow() {
+	struct node* temp = head;
+	if (temp == NULL) return;				
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+
+	printf("tail-");
+	while (temp != NULL) {
+		printf("%d-", temp->data);
+		temp = temp->previus;
+	}
+	printf("head");
+	printf("\n");
 }
 
 

@@ -12,6 +12,7 @@ int main()
 		add(idx);
 	}		
 	show();
+	reverseShow();
 
 	return 1;
 }

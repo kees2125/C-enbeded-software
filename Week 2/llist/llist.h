@@ -5,10 +5,12 @@ struct node
 {
 	int data;
 	struct node *next;
+	struct node *previus;
 };
 
 void init();
 int add(int data);
 void show();
+void reverseShow();
 
 #endif
