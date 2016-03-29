@@ -1,0 +1,420 @@
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 1
+
+
+   1               		.file	"keyboard.c"
+   2               		.arch atmega2561
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	KbScan
+  12               		.type	KbScan, @function
+  13               	KbScan:
+  14               	/* prologue: frame size=0 */
+  15               	/* prologue end (size=0) */
+  16 0000 A398      		cbi 52-0x20,3
+  17               	/* #APP */
+  18 0002 0000      		nop
+  19 0004 0000      		nop
+  20               	/* #NOAPP */
+  21 0006 6FB1      		in r22,47-0x20
+  22 0008 A39A      		sbi 52-0x20,3
+  23 000a A498      		cbi 52-0x20,4
+  24               	/* #APP */
+  25 000c 0000      		nop
+  26 000e 0000      		nop
+  27               	/* #NOAPP */
+  28 0010 4FB1      		in r20,47-0x20
+  29 0012 A49A      		sbi 52-0x20,4
+  30 0014 5B98      		cbi 43-0x20,3
+  31               	/* #APP */
+  32 0016 0000      		nop
+  33 0018 0000      		nop
+  34               	/* #NOAPP */
+  35 001a 8FB1      		in r24,47-0x20
+  36 001c 5B9A      		sbi 43-0x20,3
+  37 001e 5A98      		cbi 43-0x20,2
+  38               	/* #APP */
+  39 0020 0000      		nop
+  40 0022 0000      		nop
+  41               	/* #NOAPP */
+  42 0024 2FB1      		in r18,47-0x20
+  43 0026 5A9A      		sbi 43-0x20,2
+  44 0028 6295      		swap r22
+  45 002a 6F70      		andi r22,0x0f
+  46 002c 7727      		clr r23
+  47 002e 407F      		andi r20,lo8(-16)
+  48 0030 5527      		clr r21
+  49 0032 642B      		or r22,r20
+  50 0034 752B      		or r23,r21
+  51 0036 807F      		andi r24,lo8(-16)
+  52 0038 9927      		clr r25
+  53 003a 34E0      		ldi r19,4
+  54 003c 880F      	1:	lsl r24
+  55 003e 991F      		rol r25
+  56 0040 3A95      		dec r19
+  57 0042 01F4      		brne 1b
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 2
+
+
+  58 0044 682B      		or r22,r24
+  59 0046 792B      		or r23,r25
+  60 0048 207F      		andi r18,lo8(-16)
+  61 004a 3327      		clr r19
+  62 004c 322F      		mov r19,r18
+  63 004e 2227      		clr r18
+  64 0050 622B      		or r22,r18
+  65 0052 732B      		or r23,r19
+  66 0054 7093 0000 		sts (KeyFound)+1,r23
+  67 0058 6093 0000 		sts KeyFound,r22
+  68 005c 8FEF      		ldi r24,hi8(-65)
+  69 005e 6F3B      		cpi r22,lo8(-65)
+  70 0060 7807      		cpc r23,r24
+  71 0062 01F4      		brne .+2
+  72 0064 00C0      		rjmp .L10
+  73 0066 8FEF      		ldi r24,hi8(-64)
+  74 0068 603C      		cpi r22,lo8(-64)
+  75 006a 7807      		cpc r23,r24
+  76 006c 00F4      		brsh .L18
+  77 006e 8BEF      		ldi r24,hi8(-1025)
+  78 0070 6F3F      		cpi r22,lo8(-1025)
+  79 0072 7807      		cpc r23,r24
+  80 0074 01F4      		brne .+2
+  81 0076 00C0      		rjmp .L6
+  82 0078 8CEF      		ldi r24,hi8(-1024)
+  83 007a 6030      		cpi r22,lo8(-1024)
+  84 007c 7807      		cpc r23,r24
+  85 007e 00F4      		brsh .L19
+  86 0080 8FEE      		ldi r24,hi8(-4097)
+  87 0082 6F3F      		cpi r22,lo8(-4097)
+  88 0084 7807      		cpc r23,r24
+  89 0086 01F4      		brne .+2
+  90 0088 00C0      		rjmp .L4
+  91 008a 87EF      		ldi r24,hi8(-2049)
+  92 008c 6F3F      		cpi r22,lo8(-2049)
+  93 008e 7807      		cpc r23,r24
+  94 0090 01F4      		brne .+2
+  95 0092 00C0      		rjmp .L5
+  96 0094 6F5B      		subi r22,lo8(-4161)
+  97 0096 7F4E      		sbci r23,hi8(-4161)
+  98 0098 01F4      		brne .L2
+  99 009a 00C0      		rjmp .L3
+ 100               	.L19:
+ 101 009c 8EEF      		ldi r24,hi8(-257)
+ 102 009e 6F3F      		cpi r22,lo8(-257)
+ 103 00a0 7807      		cpc r23,r24
+ 104 00a2 01F4      		brne .+2
+ 105 00a4 00C0      		rjmp .L8
+ 106 00a6 8FEF      		ldi r24,hi8(-129)
+ 107 00a8 6F37      		cpi r22,lo8(-129)
+ 108 00aa 7807      		cpc r23,r24
+ 109 00ac 01F0      		breq .L9
+ 110 00ae 6F5F      		subi r22,lo8(-513)
+ 111 00b0 7D4F      		sbci r23,hi8(-513)
+ 112 00b2 01F4      		brne .L2
+ 113 00b4 00C0      		rjmp .L7
+ 114               	.L18:
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 3
+
+
+ 115 00b6 8FEF      		ldi r24,hi8(-9)
+ 116 00b8 673F      		cpi r22,lo8(-9)
+ 117 00ba 7807      		cpc r23,r24
+ 118 00bc 01F0      		breq .L14
+ 119 00be 8FEF      		ldi r24,hi8(-8)
+ 120 00c0 683F      		cpi r22,lo8(-8)
+ 121 00c2 7807      		cpc r23,r24
+ 122 00c4 00F4      		brsh .L20
+ 123 00c6 8FEF      		ldi r24,hi8(-33)
+ 124 00c8 6F3D      		cpi r22,lo8(-33)
+ 125 00ca 7807      		cpc r23,r24
+ 126 00cc 01F0      		breq .L12
+ 127 00ce 8FEF      		ldi r24,hi8(-17)
+ 128 00d0 6F3E      		cpi r22,lo8(-17)
+ 129 00d2 7807      		cpc r23,r24
+ 130 00d4 01F0      		breq .L13
+ 131 00d6 6F5C      		subi r22,lo8(-49)
+ 132 00d8 7F4F      		sbci r23,hi8(-49)
+ 133 00da 01F4      		brne .L2
+ 134 00dc 00C0      		rjmp .L11
+ 135               	.L20:
+ 136 00de 8FEF      		ldi r24,hi8(-3)
+ 137 00e0 6D3F      		cpi r22,lo8(-3)
+ 138 00e2 7807      		cpc r23,r24
+ 139 00e4 01F0      		breq .L16
+ 140 00e6 8FEF      		ldi r24,hi8(-2)
+ 141 00e8 6E3F      		cpi r22,lo8(-2)
+ 142 00ea 7807      		cpc r23,r24
+ 143 00ec 01F0      		breq .L17
+ 144 00ee 6B5F      		subi r22,lo8(-5)
+ 145 00f0 7F4F      		sbci r23,hi8(-5)
+ 146 00f2 01F4      		brne .L2
+ 147 00f4 00C0      		rjmp .L15
+ 148               	.L3:
+ 149 00f6 83E1      		ldi r24,lo8(19)
+ 150 00f8 90E0      		ldi r25,hi8(19)
+ 151 00fa 00C0      		rjmp .L21
+ 152               	.L2:
+ 153 00fc 88E8      		ldi r24,lo8(136)
+ 154 00fe 90E0      		ldi r25,hi8(136)
+ 155 0100 00C0      		rjmp .L21
+ 156               	.L15:
+ 157 0102 81E0      		ldi r24,lo8(1)
+ 158 0104 90E0      		ldi r25,hi8(1)
+ 159 0106 00C0      		rjmp .L21
+ 160               	.L16:
+ 161 0108 82E0      		ldi r24,lo8(2)
+ 162 010a 90E0      		ldi r25,hi8(2)
+ 163 010c 00C0      		rjmp .L21
+ 164               	.L9:
+ 165 010e 83E0      		ldi r24,lo8(3)
+ 166 0110 90E0      		ldi r25,hi8(3)
+ 167 0112 00C0      		rjmp .L21
+ 168               	.L14:
+ 169 0114 84E0      		ldi r24,lo8(4)
+ 170 0116 90E0      		ldi r25,hi8(4)
+ 171 0118 00C0      		rjmp .L21
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 4
+
+
+ 172               	.L17:
+ 173 011a 85E0      		ldi r24,lo8(5)
+ 174 011c 90E0      		ldi r25,hi8(5)
+ 175 011e 00C0      		rjmp .L21
+ 176               	.L10:
+ 177 0120 86E0      		ldi r24,lo8(6)
+ 178 0122 90E0      		ldi r25,hi8(6)
+ 179 0124 00C0      		rjmp .L21
+ 180               	.L13:
+ 181 0126 87E0      		ldi r24,lo8(7)
+ 182 0128 90E0      		ldi r25,hi8(7)
+ 183 012a 00C0      		rjmp .L21
+ 184               	.L5:
+ 185 012c 88E0      		ldi r24,lo8(8)
+ 186 012e 90E0      		ldi r25,hi8(8)
+ 187 0130 00C0      		rjmp .L21
+ 188               	.L12:
+ 189 0132 89E0      		ldi r24,lo8(9)
+ 190 0134 90E0      		ldi r25,hi8(9)
+ 191 0136 00C0      		rjmp .L21
+ 192               	.L8:
+ 193 0138 8AE0      		ldi r24,lo8(10)
+ 194 013a 90E0      		ldi r25,hi8(10)
+ 195 013c 00C0      		rjmp .L21
+ 196               	.L6:
+ 197 013e 8BE0      		ldi r24,lo8(11)
+ 198 0140 90E0      		ldi r25,hi8(11)
+ 199 0142 00C0      		rjmp .L21
+ 200               	.L7:
+ 201 0144 8CE0      		ldi r24,lo8(12)
+ 202 0146 90E0      		ldi r25,hi8(12)
+ 203 0148 00C0      		rjmp .L21
+ 204               	.L4:
+ 205 014a 8DE0      		ldi r24,lo8(13)
+ 206 014c 90E0      		ldi r25,hi8(13)
+ 207 014e 00C0      		rjmp .L21
+ 208               	.L11:
+ 209 0150 8EE0      		ldi r24,lo8(14)
+ 210 0152 90E0      		ldi r25,hi8(14)
+ 211               	.L21:
+ 212 0154 8093 0000 		sts KeyBuffer,r24
+ 213               	/* epilogue: frame size=0 */
+ 214 0158 0895      		ret
+ 215               	/* epilogue end (size=1) */
+ 216               	/* function KbScan size 185 (184) */
+ 217               		.size	KbScan, .-KbScan
+ 218               	.global	KbSetKeyRepeating
+ 219               		.type	KbSetKeyRepeating, @function
+ 220               	KbSetKeyRepeating:
+ 221               	/* prologue: frame size=0 */
+ 222               	/* prologue end (size=0) */
+ 223 015a E82F      		mov r30,r24
+ 224 015c 862F      		mov r24,r22
+ 225 015e 8150      		subi r24,lo8(-(-1))
+ 226 0160 8230      		cpi r24,lo8(2)
+ 227 0162 00F4      		brsh .L27
+ 228 0164 E031      		cpi r30,lo8(16)
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 5
+
+
+ 229 0166 00F4      		brsh .L27
+ 230 0168 FF27      		clr r31
+ 231 016a E050      		subi r30,lo8(-(KeyRepeatArray))
+ 232 016c F040      		sbci r31,hi8(-(KeyRepeatArray))
+ 233 016e 6083      		st Z,r22
+ 234               	.L27:
+ 235 0170 0895      		ret
+ 236               	/* epilogue: frame size=0 */
+ 237               	/* epilogue: noreturn */
+ 238               	/* epilogue end (size=0) */
+ 239               	/* function KbSetKeyRepeating size 12 (12) */
+ 240               		.size	KbSetKeyRepeating, .-KbSetKeyRepeating
+ 241               	.global	KbGetKey
+ 242               		.type	KbGetKey, @function
+ 243               	KbGetKey:
+ 244               	/* prologue: frame size=0 */
+ 245               	/* prologue end (size=0) */
+ 246 0172 8091 0000 		lds r24,KeyBuffer
+ 247 0176 9927      		clr r25
+ 248               	/* epilogue: frame size=0 */
+ 249 0178 0895      		ret
+ 250               	/* epilogue end (size=1) */
+ 251               	/* function KbGetKey size 4 (3) */
+ 252               		.size	KbGetKey, .-KbGetKey
+ 253               	.global	KbInjectKey
+ 254               		.type	KbInjectKey, @function
+ 255               	KbInjectKey:
+ 256               	/* prologue: frame size=0 */
+ 257               	/* prologue end (size=0) */
+ 258 017a 8093 0000 		sts KeyBuffer,r24
+ 259 017e E091 0000 		lds r30,hKBEvent
+ 260 0182 F091 0000 		lds r31,(hKBEvent)+1
+ 261 0186 3097      		sbiw r30,0
+ 262 0188 01F4      		brne .L31
+ 263 018a 8FEF      		ldi r24,lo8(-1)
+ 264 018c 9FEF      		ldi r25,hi8(-1)
+ 265 018e 9093 0000 		sts (hKBEvent)+1,r25
+ 266 0192 8093 0000 		sts hKBEvent,r24
+ 267 0196 0895      		ret
+ 268               	.L31:
+ 269 0198 8FEF      		ldi r24,hi8(-1)
+ 270 019a EF3F      		cpi r30,lo8(-1)
+ 271 019c F807      		cpc r31,r24
+ 272 019e 01F0      		breq .L35
+ 273 01a0 8481      		ldd r24,Z+4
+ 274 01a2 9581      		ldd r25,Z+5
+ 275 01a4 0196      		adiw r24,1
+ 276 01a6 9583      		std Z+5,r25
+ 277 01a8 8483      		std Z+4,r24
+ 278               	.L35:
+ 279 01aa 0895      		ret
+ 280               	/* epilogue: frame size=0 */
+ 281               	/* epilogue: noreturn */
+ 282               	/* epilogue end (size=0) */
+ 283               	/* function KbInjectKey size 25 (25) */
+ 284               		.size	KbInjectKey, .-KbInjectKey
+ 285               	.global	KbInit
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 6
+
+
+ 286               		.type	KbInit, @function
+ 287               	KbInit:
+ 288               	/* prologue: frame size=0 */
+ 289               	/* prologue end (size=0) */
+ 290 01ac A39A      		sbi 52-0x20,3
+ 291 01ae A49A      		sbi 52-0x20,4
+ 292 01b0 5B9A      		sbi 43-0x20,3
+ 293 01b2 5A9A      		sbi 43-0x20,2
+ 294 01b4 1092 0000 		sts KbState,__zero_reg__
+ 295 01b8 8FEF      		ldi r24,lo8(-1)
+ 296 01ba 9FEF      		ldi r25,hi8(-1)
+ 297 01bc 9093 0000 		sts (KeyFound)+1,r25
+ 298 01c0 8093 0000 		sts KeyFound,r24
+ 299               	/* #APP */
+ 300 01c4 0FB6      		in  __tmp_reg__, __SREG__
+ 301 01c6 F894      		cli
+ 302 01c8 0F92      		push __tmp_reg__
+ 303               		
+ 304               	/* #NOAPP */
+ 305 01ca 1092 0000 		sts (hKBEvent)+1,__zero_reg__
+ 306 01ce 1092 0000 		sts hKBEvent,__zero_reg__
+ 307               	/* #APP */
+ 308 01d2 0F90      		pop __tmp_reg__
+ 309 01d4 0FBE      		out __SREG__, __tmp_reg__
+ 310               		
+ 311               	/* #NOAPP */
+ 312 01d6 8FEF      		ldi r24,lo8(-1)
+ 313 01d8 8093 0000 		sts KeyBuffer,r24
+ 314 01dc E0E0      		ldi r30,lo8(KeyRepeatArray)
+ 315 01de F0E0      		ldi r31,hi8(KeyRepeatArray)
+ 316 01e0 82E0      		ldi r24,lo8(2)
+ 317               	.L37:
+ 318 01e2 8193      		st Z+,r24
+ 319 01e4 90E0      		ldi r25,hi8(KeyRepeatArray+16)
+ 320 01e6 E030      		cpi r30,lo8(KeyRepeatArray+16)
+ 321 01e8 F907      		cpc r31,r25
+ 322 01ea 01F4      		brne .L37
+ 323 01ec 1092 0000 		sts (HoldCounter)+1,__zero_reg__
+ 324 01f0 1092 0000 		sts HoldCounter,__zero_reg__
+ 325 01f4 61E0      		ldi r22,lo8(1)
+ 326 01f6 88E0      		ldi r24,lo8(8)
+ 327 01f8 0E94 0000 		call KbSetKeyRepeating
+ 328 01fc 61E0      		ldi r22,lo8(1)
+ 329 01fe 8BE0      		ldi r24,lo8(11)
+ 330 0200 0E94 0000 		call KbSetKeyRepeating
+ 331 0204 61E0      		ldi r22,lo8(1)
+ 332 0206 8AE0      		ldi r24,lo8(10)
+ 333 0208 0E94 0000 		call KbSetKeyRepeating
+ 334 020c 61E0      		ldi r22,lo8(1)
+ 335 020e 8CE0      		ldi r24,lo8(12)
+ 336 0210 0E94 0000 		call KbSetKeyRepeating
+ 337               	/* epilogue: frame size=0 */
+ 338 0214 0895      		ret
+ 339               	/* epilogue end (size=1) */
+ 340               	/* function KbInit size 62 (61) */
+ 341               		.size	KbInit, .-KbInit
+ 342               	.global	KbWaitForKeyEvent
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 7
+
+
+ 343               		.type	KbWaitForKeyEvent, @function
+ 344               	KbWaitForKeyEvent:
+ 345               	/* prologue: frame size=0 */
+ 346               	/* prologue end (size=0) */
+ 347 0216 AB01      		movw r20,r22
+ 348 0218 BC01      		movw r22,r24
+ 349 021a 80E0      		ldi r24,lo8(hKBEvent)
+ 350 021c 90E0      		ldi r25,hi8(hKBEvent)
+ 351 021e 0E94 0000 		call NutEventWait
+ 352 0222 20E0      		ldi r18,lo8(0)
+ 353 0224 30E0      		ldi r19,hi8(0)
+ 354 0226 8F5F      		subi r24,lo8(-1)
+ 355 0228 9F4F      		sbci r25,hi8(-1)
+ 356 022a 01F4      		brne .L43
+ 357 022c 21E0      		ldi r18,lo8(1)
+ 358 022e 30E0      		ldi r19,hi8(1)
+ 359               	.L43:
+ 360 0230 C901      		movw r24,r18
+ 361               	/* epilogue: frame size=0 */
+ 362 0232 0895      		ret
+ 363               	/* epilogue end (size=1) */
+ 364               	/* function KbWaitForKeyEvent size 16 (15) */
+ 365               		.size	KbWaitForKeyEvent, .-KbWaitForKeyEvent
+ 366               		.lcomm hKBEvent,2
+ 367               		.lcomm KeyFound,2
+ 368               		.lcomm KeyBuffer,1
+ 369               		.lcomm HoldCounter,2
+ 370               		.lcomm KbState,1
+ 371               		.lcomm KeyRepeatArray,16
+ 372               	/* File "source/keyboard.c": code  304 = 0x0130 ( 300), prologues   0, epilogues   4 */
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 keyboard.c
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:3      *ABS*:0000003f __SREG__
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:4      *ABS*:0000003e __SP_H__
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:5      *ABS*:0000003d __SP_L__
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:13     .text:00000000 KbScan
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:366    .bss:00000002 KeyFound
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:367    .bss:00000004 KeyBuffer
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:220    .text:0000015a KbSetKeyRepeating
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:370    .bss:00000008 KeyRepeatArray
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:243    .text:00000172 KbGetKey
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:255    .text:0000017a KbInjectKey
+                             .bss:00000000 hKBEvent
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:287    .text:000001ac KbInit
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:369    .bss:00000007 KbState
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:368    .bss:00000005 HoldCounter
+C:\Users\mauro\AppData\Local\Temp\/ccx8Nu5J.s:344    .text:00000216 KbWaitForKeyEvent
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+NutEventWait

@@ -1,0 +1,35 @@
+int isLoaded =initFirstTime();
+
+
+if(isLoaded ==-1)
+			{
+				switch(KbGetKey())
+				{
+					case KEY_UP:
+								changeUtcUp();
+								printf("%d shit does", isLoaded);
+								setUtc();
+								break;
+					case KEY_DOWN:
+								changeUtcDown();
+								setUtc();
+								break;
+					case KEY_OK:
+								printf("%d \n", IMCconfig.UTC);
+								saveEEPROM();
+								clearScreen();
+								setCursorPos(0,0);
+								
+								printString("Saved!");
+								break;
+								
+				}
+				
+			}
+			if(isLoaded==0)
+			{
+				printf("%d shit exists \n", IMCconfig.UTC);
+				clearScreen();
+				setCursorPos(0,0);
+				printString("Loaded settings");
+			}

@@ -1,0 +1,299 @@
+GAS LISTING C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s 			page 1
+
+
+   1               		.file	"audioLib.c"
+   2               		.arch atmega2561
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	getVolume
+  12               		.type	getVolume, @function
+  13               	getVolume:
+  14               	/* prologue: frame size=0 */
+  15               	/* prologue end (size=0) */
+  16 0000 8091 0000 		lds r24,soundVolume
+  17 0004 9091 0000 		lds r25,(soundVolume)+1
+  18               	/* epilogue: frame size=0 */
+  19 0008 0895      		ret
+  20               	/* epilogue end (size=1) */
+  21               	/* function getVolume size 5 (4) */
+  22               		.size	getVolume, .-getVolume
+  23               	.global	play
+  24               		.type	play, @function
+  25               	play:
+  26               	/* prologue: frame size=0 */
+  27               	/* prologue end (size=0) */
+  28               	/* epilogue: frame size=0 */
+  29 000a 0895      		ret
+  30               	/* epilogue end (size=1) */
+  31               	/* function play size 1 (0) */
+  32               		.size	play, .-play
+  33               	.global	pauze
+  34               		.type	pauze, @function
+  35               	pauze:
+  36               	/* prologue: frame size=0 */
+  37               	/* prologue end (size=0) */
+  38 000c 0E94 0000 		call VsBeepStop
+  39               	/* epilogue: frame size=0 */
+  40 0010 0895      		ret
+  41               	/* epilogue end (size=1) */
+  42               	/* function pauze size 3 (2) */
+  43               		.size	pauze, .-pauze
+  44               	.global	audioInit
+  45               		.type	audioInit, @function
+  46               	audioInit:
+  47               	/* prologue: frame size=0 */
+  48               	/* prologue end (size=0) */
+  49 0012 0E94 0000 		call VsPlayerInit
+  50               	/* epilogue: frame size=0 */
+  51 0016 0895      		ret
+  52               	/* epilogue end (size=1) */
+  53               	/* function audioInit size 3 (2) */
+  54               		.size	audioInit, .-audioInit
+  55               		.data
+  56               	.LC0:
+  57 0000 5673 506C 		.string	"VsPlayerKick()"
+GAS LISTING C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s 			page 2
+
+
+  57      6179 6572 
+  57      4B69 636B 
+  57      2829 00
+  58               		.text
+  59               	.global	StreamPlayer
+  60               		.type	StreamPlayer, @function
+  61               	StreamPlayer:
+  62               	/* prologue: frame size=2 */
+  63 0018 CF93      		push r28
+  64 001a DF93      		push r29
+  65 001c CDB7      		in r28,__SP_L__
+  66 001e DEB7      		in r29,__SP_H__
+  67 0020 2297      		sbiw r28,2
+  68 0022 0FB6      		in __tmp_reg__,__SREG__
+  69 0024 F894      		cli
+  70 0026 DEBF      		out __SP_H__,r29
+  71 0028 0FBE      		out __SREG__,__tmp_reg__
+  72 002a CDBF      		out __SP_L__,r28
+  73               	/* prologue end (size=10) */
+  74 002c 5C01      		movw r10,r24
+  75 002e 1A82      		std Y+2,__zero_reg__
+  76 0030 1982      		std Y+1,__zero_reg__
+  77 0032 80E0      		ldi r24,lo8(8192)
+  78 0034 90E2      		ldi r25,hi8(8192)
+  79 0036 0E94 0000 		call NutSegBufInit
+  80 003a 892B      		or r24,r25
+  81 003c 01F0      		breq .L29
+  82 003e 80E0      		ldi r24,lo8(0)
+  83 0040 0E94 0000 		call VsPlayerInterrupts
+  84 0044 182F      		mov r17,r24
+  85 0046 0E94 0000 		call NutSegBufReset
+  86 004a 812F      		mov r24,r17
+  87 004c 0E94 0000 		call VsPlayerInterrupts
+  88 0050 0E94 0000 		call VsPlayerInit
+  89 0054 8F5F      		subi r24,lo8(-1)
+  90 0056 9F4F      		sbci r25,hi8(-1)
+  91 0058 01F4      		brne .L29
+  92 005a 80E0      		ldi r24,lo8(0)
+  93 005c 90E0      		ldi r25,hi8(0)
+  94 005e 0E94 0000 		call VsPlayerReset
+  95               	.L29:
+  96 0062 80E0      		ldi r24,lo8(0)
+  97 0064 0E94 0000 		call VsPlayerInterrupts
+  98 0068 182F      		mov r17,r24
+  99 006a CE01      		movw r24,r28
+ 100 006c 0196      		adiw r24,1
+ 101 006e 0E94 0000 		call NutSegBufWriteRequest
+ 102 0072 6C01      		movw r12,r24
+ 103 0074 812F      		mov r24,r17
+ 104 0076 0E94 0000 		call VsPlayerInterrupts
+ 105 007a 0E94 0000 		call VsGetStatus
+ 106 007e 8130      		cpi r24,lo8(1)
+ 107 0080 01F0      		breq .L27
+ 108 0082 8981      		ldd r24,Y+1
+ 109 0084 9A81      		ldd r25,Y+2
+ 110 0086 8050      		subi r24,lo8(1024)
+ 111 0088 9440      		sbci r25,hi8(1024)
+GAS LISTING C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s 			page 3
+
+
+ 112 008a 00F4      		brsh .L27
+ 113 008c 80E0      		ldi r24,lo8(.LC0)
+ 114 008e 90E0      		ldi r25,hi8(.LC0)
+ 115 0090 0E94 0000 		call puts
+ 116 0094 0E94 0000 		call VsPlayerKick
+ 117 0098 00C0      		rjmp .L27
+ 118               	.L16:
+ 119 009a 9501      		movw r18,r10
+ 120 009c 61E0      		ldi r22,lo8(1)
+ 121 009e 70E0      		ldi r23,hi8(1)
+ 122 00a0 C601      		movw r24,r12
+ 123 00a2 0E94 0000 		call fread
+ 124 00a6 7C01      		movw r14,r24
+ 125 00a8 1816      		cp __zero_reg__,r24
+ 126 00aa 1906      		cpc __zero_reg__,r25
+ 127 00ac 04F4      		brge .L29
+ 128 00ae 80E0      		ldi r24,lo8(0)
+ 129 00b0 0E94 0000 		call VsPlayerInterrupts
+ 130 00b4 182F      		mov r17,r24
+ 131 00b6 C701      		movw r24,r14
+ 132 00b8 0E94 0000 		call NutSegBufWriteCommit
+ 133 00bc 6C01      		movw r12,r24
+ 134 00be 812F      		mov r24,r17
+ 135 00c0 0E94 0000 		call VsPlayerInterrupts
+ 136 00c4 8981      		ldd r24,Y+1
+ 137 00c6 9A81      		ldd r25,Y+2
+ 138 00c8 E816      		cp r14,r24
+ 139 00ca F906      		cpc r15,r25
+ 140 00cc 00F4      		brsh .L18
+ 141 00ce 80E0      		ldi r24,lo8(512)
+ 142 00d0 E816      		cp r14,r24
+ 143 00d2 82E0      		ldi r24,hi8(512)
+ 144 00d4 F806      		cpc r15,r24
+ 145 00d6 04F4      		brge .L18
+ 146 00d8 6AEF      		ldi r22,lo8(250)
+ 147 00da 70E0      		ldi r23,hi8(250)
+ 148 00dc 80E0      		ldi r24,hlo8(250)
+ 149 00de 90E0      		ldi r25,hhi8(250)
+ 150 00e0 0E94 0000 		call NutSleep
+ 151               	.L18:
+ 152 00e4 8981      		ldd r24,Y+1
+ 153 00e6 9A81      		ldd r25,Y+2
+ 154 00e8 8E19      		sub r24,r14
+ 155 00ea 9F09      		sbc r25,r15
+ 156 00ec 9A83      		std Y+2,r25
+ 157 00ee 8983      		std Y+1,r24
+ 158               	.L27:
+ 159 00f0 4981      		ldd r20,Y+1
+ 160 00f2 5A81      		ldd r21,Y+2
+ 161 00f4 4115      		cp r20,__zero_reg__
+ 162 00f6 5105      		cpc r21,__zero_reg__
+ 163 00f8 01F4      		brne .L16
+ 164 00fa 00C0      		rjmp .L29
+ 165               	/* epilogue: frame size=2 */
+ 166               	/* epilogue: noreturn */
+ 167               	/* epilogue end (size=0) */
+ 168               	/* function StreamPlayer size 116 (106) */
+GAS LISTING C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s 			page 4
+
+
+ 169               		.size	StreamPlayer, .-StreamPlayer
+ 170               		.data
+ 171               	.LC1:
+ 172 000f 4267 00   		.string	"Bg"
+ 173               	.LC2:
+ 174 0012 506C 6179 		.string	"Play thread created. Device is playing stream now !"
+ 174      2074 6872 
+ 174      6561 6420 
+ 174      6372 6561 
+ 174      7465 642E 
+ 175               		.text
+ 176               	.global	playStream
+ 177               		.type	playStream, @function
+ 178               	playStream:
+ 179               	/* prologue: frame size=0 */
+ 180               	/* prologue end (size=0) */
+ 181 00fc 20E0      		ldi r18,lo8(512)
+ 182 00fe 32E0      		ldi r19,hi8(512)
+ 183 0100 AC01      		movw r20,r24
+ 184 0102 60E0      		ldi r22,lo8(gs(StreamPlayer))
+ 185 0104 70E0      		ldi r23,hi8(gs(StreamPlayer))
+ 186 0106 80E0      		ldi r24,lo8(.LC1)
+ 187 0108 90E0      		ldi r25,hi8(.LC1)
+ 188 010a 0E94 0000 		call NutThreadCreate
+ 189 010e 80E0      		ldi r24,lo8(.LC2)
+ 190 0110 90E0      		ldi r25,hi8(.LC2)
+ 191 0112 0E94 0000 		call puts
+ 192               	/* epilogue: frame size=0 */
+ 193 0116 0895      		ret
+ 194               	/* epilogue end (size=1) */
+ 195               	/* function playStream size 14 (13) */
+ 196               		.size	playStream, .-playStream
+ 197               	.global	playTone
+ 198               		.type	playTone, @function
+ 199               	playTone:
+ 200               	/* prologue: frame size=0 */
+ 201               	/* prologue end (size=0) */
+ 202 0118 0E94 0000 		call VsBeepStart
+ 203 011c 6AE0      		ldi r22,lo8(10)
+ 204 011e 70E0      		ldi r23,hi8(10)
+ 205 0120 80E0      		ldi r24,hlo8(10)
+ 206 0122 90E0      		ldi r25,hhi8(10)
+ 207 0124 0E94 0000 		call NutSleep
+ 208               	/* epilogue: frame size=0 */
+ 209 0128 0895      		ret
+ 210               	/* epilogue end (size=1) */
+ 211               	/* function playTone size 9 (8) */
+ 212               		.size	playTone, .-playTone
+ 213               	.global	setAudioVolume
+ 214               		.type	setAudioVolume, @function
+ 215               	setAudioVolume:
+ 216               	/* prologue: frame size=0 */
+ 217 012a 0F93      		push r16
+ 218 012c 1F93      		push r17
+ 219               	/* prologue end (size=2) */
+ 220 012e 8C01      		movw r16,r24
+ 221 0130 682F      		mov r22,r24
+GAS LISTING C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s 			page 5
+
+
+ 222 0132 0E94 0000 		call VsSetVolume
+ 223 0136 1093 0000 		sts (soundVolume)+1,r17
+ 224 013a 0093 0000 		sts soundVolume,r16
+ 225               	/* epilogue: frame size=0 */
+ 226 013e 1F91      		pop r17
+ 227 0140 0F91      		pop r16
+ 228 0142 0895      		ret
+ 229               	/* epilogue end (size=3) */
+ 230               	/* function setAudioVolume size 13 (8) */
+ 231               		.size	setAudioVolume, .-setAudioVolume
+ 232               	.global	soundVolume
+ 233               		.data
+ 234               		.type	soundVolume, @object
+ 235               		.size	soundVolume, 2
+ 236               	soundVolume:
+ 237 0046 FFFF      		.word	-1
+ 238               	/* File "source/audioLib.c": code  164 = 0x00a4 ( 143), prologues  12, epilogues   9 */
+GAS LISTING C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 audioLib.c
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:3      *ABS*:0000003f __SREG__
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:4      *ABS*:0000003e __SP_H__
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:5      *ABS*:0000003d __SP_L__
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:13     .text:00000000 getVolume
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:236    .data:00000046 soundVolume
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:25     .text:0000000a play
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:35     .text:0000000c pauze
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:46     .text:00000012 audioInit
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:61     .text:00000018 StreamPlayer
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:178    .text:000000fc playStream
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:199    .text:00000118 playTone
+C:\Users\martijn\AppData\Local\Temp\/ccAuaKQh.s:215    .text:0000012a setAudioVolume
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+VsBeepStop
+VsPlayerInit
+NutSegBufInit
+VsPlayerInterrupts
+NutSegBufReset
+VsPlayerReset
+NutSegBufWriteRequest
+VsGetStatus
+puts
+VsPlayerKick
+fread
+NutSegBufWriteCommit
+NutSleep
+NutThreadCreate
+VsBeepStart
+VsSetVolume

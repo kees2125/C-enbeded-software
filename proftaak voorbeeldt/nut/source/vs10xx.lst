@@ -1,0 +1,2143 @@
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 1
+
+
+   1               		.file	"vs10xx.c"
+   2               		.arch atmega2561
+   3               	__SREG__ = 0x3f
+   4               	__SP_H__ = 0x3e
+   5               	__SP_L__ = 0x3d
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	VsPlayerInterrupts
+  12               		.type	VsPlayerInterrupts, @function
+  13               	VsPlayerInterrupts:
+  14               	/* prologue: frame size=0 */
+  15               	/* prologue end (size=0) */
+  16               	/* #APP */
+  17 0000 0FB6      		in  __tmp_reg__, __SREG__
+  18 0002 F894      		cli
+  19 0004 0F92      		push __tmp_reg__
+  20               		
+  21               	/* #NOAPP */
+  22 0006 9DB3      		in r25,61-0x20
+  23 0008 8823      		tst r24
+  24 000a 01F0      		breq .L2
+  25 000c EE9A      		sbi 61-0x20,6
+  26 000e 00C0      		rjmp .L4
+  27               	.L2:
+  28 0010 EE98      		cbi 61-0x20,6
+  29               	.L4:
+  30               	/* #APP */
+  31 0012 0F90      		pop __tmp_reg__
+  32 0014 0FBE      		out __SREG__, __tmp_reg__
+  33               		
+  34               	/* #NOAPP */
+  35 0016 892F      		mov r24,r25
+  36 0018 9927      		clr r25
+  37 001a 26E0      		ldi r18,6
+  38 001c 9695      	1:	lsr r25
+  39 001e 8795      		ror r24
+  40 0020 2A95      		dec r18
+  41 0022 01F4      		brne 1b
+  42 0024 8170      		andi r24,lo8(1)
+  43 0026 9070      		andi r25,hi8(1)
+  44               	/* epilogue: frame size=0 */
+  45 0028 0895      		ret
+  46               	/* epilogue end (size=1) */
+  47               	/* function VsPlayerInterrupts size 30 (29) */
+  48               		.size	VsPlayerInterrupts, .-VsPlayerInterrupts
+  49               	.global	VsPlayerStop
+  50               		.type	VsPlayerStop, @function
+  51               	VsPlayerStop:
+  52               	/* prologue: frame size=0 */
+  53               	/* prologue end (size=0) */
+  54 002a 80E0      		ldi r24,lo8(0)
+  55 002c 0E94 0000 		call VsPlayerInterrupts
+  56 0030 982F      		mov r25,r24
+  57 0032 8091 0000 		lds r24,vs_status
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 2
+
+
+  58 0036 8130      		cpi r24,lo8(1)
+  59 0038 01F4      		brne .L7
+  60 003a 1092 0000 		sts vs_status,__zero_reg__
+  61               	.L7:
+  62 003e 892F      		mov r24,r25
+  63 0040 0E94 0000 		call VsPlayerInterrupts
+  64 0044 80E0      		ldi r24,lo8(0)
+  65 0046 90E0      		ldi r25,hi8(0)
+  66               	/* epilogue: frame size=0 */
+  67 0048 0895      		ret
+  68               	/* epilogue end (size=1) */
+  69               	/* function VsPlayerStop size 16 (15) */
+  70               		.size	VsPlayerStop, .-VsPlayerStop
+  71               	.global	VsGetStatus
+  72               		.type	VsGetStatus, @function
+  73               	VsGetStatus:
+  74               	/* prologue: frame size=0 */
+  75               	/* prologue end (size=0) */
+  76 004a 8091 0000 		lds r24,vs_status
+  77 004e 9927      		clr r25
+  78               	/* epilogue: frame size=0 */
+  79 0050 0895      		ret
+  80               	/* epilogue end (size=1) */
+  81               	/* function VsGetStatus size 4 (3) */
+  82               		.size	VsGetStatus, .-VsGetStatus
+  83               	.global	VsGetType
+  84               		.type	VsGetType, @function
+  85               	VsGetType:
+  86               	/* prologue: frame size=0 */
+  87               	/* prologue end (size=0) */
+  88 0052 8091 0000 		lds r24,g_vs_type
+  89 0056 9091 0000 		lds r25,(g_vs_type)+1
+  90               	/* epilogue: frame size=0 */
+  91 005a 0895      		ret
+  92               	/* epilogue end (size=1) */
+  93               	/* function VsGetType size 5 (4) */
+  94               		.size	VsGetType, .-VsGetType
+  95               	.global	VsGetTypeHex
+  96               		.type	VsGetTypeHex, @function
+  97               	VsGetTypeHex:
+  98               	/* prologue: frame size=0 */
+  99               	/* prologue end (size=0) */
+ 100 005c 8091 0000 		lds r24,g_vs_type
+ 101 0060 9091 0000 		lds r25,(g_vs_type)+1
+ 102               	/* epilogue: frame size=0 */
+ 103 0064 0895      		ret
+ 104               	/* epilogue end (size=1) */
+ 105               	/* function VsGetTypeHex size 5 (4) */
+ 106               		.size	VsGetTypeHex, .-VsGetTypeHex
+ 107               		.type	VsSdiWrite_P, @function
+ 108               	VsSdiWrite_P:
+ 109               	/* prologue: frame size=0 */
+ 110 0066 0F93      		push r16
+ 111 0068 1F93      		push r17
+ 112 006a CF93      		push r28
+ 113 006c DF93      		push r29
+ 114               	/* prologue end (size=4) */
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 3
+
+
+ 115 006e EC01      		movw r28,r24
+ 116 0070 8B01      		movw r16,r22
+ 117 0072 80E0      		ldi r24,lo8(0)
+ 118 0074 90E0      		ldi r25,hi8(0)
+ 119 0076 0E94 0000 		call SPIselect
+ 120 007a 00C0      		rjmp .L20
+ 121               	.L21:
+ 122 007c FE01      		movw r30,r28
+ 123               	/* #APP */
+ 124 007e 8491      		lpm r24, Z
+ 125               		
+ 126               	/* #NOAPP */
+ 127 0080 0E94 0000 		call SPIputByte
+ 128 0084 2196      		adiw r28,1
+ 129               	.L20:
+ 130 0086 0150      		subi r16,lo8(-(-1))
+ 131 0088 1040      		sbci r17,hi8(-(-1))
+ 132 008a FFEF      		ldi r31,hi8(-1)
+ 133 008c 0F3F      		cpi r16,lo8(-1)
+ 134 008e 1F07      		cpc r17,r31
+ 135 0090 01F4      		brne .L21
+ 136 0092 0E94 0000 		call SPIdeselect
+ 137               	/* epilogue: frame size=0 */
+ 138 0096 DF91      		pop r29
+ 139 0098 CF91      		pop r28
+ 140 009a 1F91      		pop r17
+ 141 009c 0F91      		pop r16
+ 142 009e 0895      		ret
+ 143               	/* epilogue end (size=5) */
+ 144               	/* function VsSdiWrite_P size 32 (23) */
+ 145               		.size	VsSdiWrite_P, .-VsSdiWrite_P
+ 146               	.global	VsBeepStop
+ 147               		.type	VsBeepStop, @function
+ 148               	VsBeepStop:
+ 149               	/* prologue: frame size=0 */
+ 150 00a0 1F93      		push r17
+ 151               	/* prologue end (size=1) */
+ 152 00a2 80E0      		ldi r24,lo8(0)
+ 153 00a4 0E94 0000 		call VsPlayerInterrupts
+ 154 00a8 182F      		mov r17,r24
+ 155 00aa 64E0      		ldi r22,lo8(4)
+ 156 00ac 70E0      		ldi r23,hi8(4)
+ 157 00ae 80E0      		ldi r24,lo8(off.2560)
+ 158 00b0 90E0      		ldi r25,hi8(off.2560)
+ 159 00b2 0E94 0000 		call VsSdiWrite_P
+ 160 00b6 64E0      		ldi r22,lo8(4)
+ 161 00b8 70E0      		ldi r23,hi8(4)
+ 162 00ba 80E0      		ldi r24,lo8(end.2561)
+ 163 00bc 90E0      		ldi r25,hi8(end.2561)
+ 164 00be 0E94 0000 		call VsSdiWrite_P
+ 165 00c2 812F      		mov r24,r17
+ 166 00c4 0E94 0000 		call VsPlayerInterrupts
+ 167 00c8 80E0      		ldi r24,lo8(0)
+ 168 00ca 90E0      		ldi r25,hi8(0)
+ 169               	/* epilogue: frame size=0 */
+ 170 00cc 1F91      		pop r17
+ 171 00ce 0895      		ret
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 4
+
+
+ 172               	/* epilogue end (size=2) */
+ 173               	/* function VsBeepStop size 24 (21) */
+ 174               		.size	VsBeepStop, .-VsBeepStop
+ 175               		.type	VsSdiWrite, @function
+ 176               	VsSdiWrite:
+ 177               	/* prologue: frame size=0 */
+ 178 00d0 0F93      		push r16
+ 179 00d2 1F93      		push r17
+ 180 00d4 CF93      		push r28
+ 181 00d6 DF93      		push r29
+ 182               	/* prologue end (size=4) */
+ 183 00d8 8C01      		movw r16,r24
+ 184 00da EB01      		movw r28,r22
+ 185 00dc 80E0      		ldi r24,lo8(0)
+ 186 00de 90E0      		ldi r25,hi8(0)
+ 187 00e0 0E94 0000 		call SPIselect
+ 188 00e4 00C0      		rjmp .L27
+ 189               	.L28:
+ 190 00e6 F801      		movw r30,r16
+ 191 00e8 8191      		ld r24,Z+
+ 192 00ea 8F01      		movw r16,r30
+ 193 00ec 0E94 0000 		call SPIputByte
+ 194               	.L27:
+ 195 00f0 2197      		sbiw r28,1
+ 196 00f2 FFEF      		ldi r31,hi8(-1)
+ 197 00f4 CF3F      		cpi r28,lo8(-1)
+ 198 00f6 DF07      		cpc r29,r31
+ 199 00f8 01F4      		brne .L28
+ 200 00fa 0E94 0000 		call SPIdeselect
+ 201               	/* epilogue: frame size=0 */
+ 202 00fe DF91      		pop r29
+ 203 0100 CF91      		pop r28
+ 204 0102 1F91      		pop r17
+ 205 0104 0F91      		pop r16
+ 206 0106 0895      		ret
+ 207               	/* epilogue end (size=5) */
+ 208               	/* function VsSdiWrite size 28 (19) */
+ 209               		.size	VsSdiWrite, .-VsSdiWrite
+ 210               	.global	VsRegWrite
+ 211               		.type	VsRegWrite, @function
+ 212               	VsRegWrite:
+ 213               	/* prologue: frame size=0 */
+ 214 0108 EF92      		push r14
+ 215 010a FF92      		push r15
+ 216 010c 0F93      		push r16
+ 217 010e 1F93      		push r17
+ 218               	/* prologue end (size=4) */
+ 219 0110 F82E      		mov r15,r24
+ 220 0112 8B01      		movw r16,r22
+ 221 0114 0E94 0000 		call SPIgetmode
+ 222 0118 E82E      		mov r14,r24
+ 223 011a 80E0      		ldi r24,lo8(0)
+ 224 011c 0E94 0000 		call SPImode
+ 225 0120 80E0      		ldi r24,lo8(0)
+ 226 0122 90E0      		ldi r25,hi8(0)
+ 227 0124 0E94 0000 		call SPIselect
+ 228 0128 2C98      		cbi 37-0x20,4
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 5
+
+
+ 229 012a 82E0      		ldi r24,lo8(2)
+ 230 012c 0E94 0000 		call SPIputByte
+ 231 0130 8F2D      		mov r24,r15
+ 232 0132 0E94 0000 		call SPIputByte
+ 233 0136 812F      		mov r24,r17
+ 234 0138 9927      		clr r25
+ 235 013a 0E94 0000 		call SPIputByte
+ 236 013e 802F      		mov r24,r16
+ 237 0140 0E94 0000 		call SPIputByte
+ 238 0144 2C9A      		sbi 37-0x20,4
+ 239 0146 0E94 0000 		call SPIdeselect
+ 240 014a 8E2D      		mov r24,r14
+ 241 014c 0E94 0000 		call SPImode
+ 242               	/* epilogue: frame size=0 */
+ 243 0150 1F91      		pop r17
+ 244 0152 0F91      		pop r16
+ 245 0154 FF90      		pop r15
+ 246 0156 EF90      		pop r14
+ 247 0158 0895      		ret
+ 248               	/* epilogue end (size=5) */
+ 249               	/* function VsRegWrite size 41 (32) */
+ 250               		.size	VsRegWrite, .-VsRegWrite
+ 251               	.global	VsSetVolume
+ 252               		.type	VsSetVolume, @function
+ 253               	VsSetVolume:
+ 254               	/* prologue: frame size=0 */
+ 255 015a DF92      		push r13
+ 256 015c EF92      		push r14
+ 257 015e FF92      		push r15
+ 258 0160 0F93      		push r16
+ 259 0162 1F93      		push r17
+ 260               	/* prologue end (size=5) */
+ 261 0164 082F      		mov r16,r24
+ 262 0166 E62E      		mov r14,r22
+ 263 0168 80E0      		ldi r24,lo8(0)
+ 264 016a 0E94 0000 		call VsPlayerInterrupts
+ 265 016e D82E      		mov r13,r24
+ 266 0170 1127      		clr r17
+ 267 0172 102F      		mov r17,r16
+ 268 0174 0027      		clr r16
+ 269 0176 FF24      		clr r15
+ 270 0178 0E29      		or r16,r14
+ 271 017a 1F29      		or r17,r15
+ 272 017c B801      		movw r22,r16
+ 273 017e 8BE0      		ldi r24,lo8(11)
+ 274 0180 0E94 0000 		call VsRegWrite
+ 275 0184 8D2D      		mov r24,r13
+ 276 0186 0E94 0000 		call VsPlayerInterrupts
+ 277 018a 80E0      		ldi r24,lo8(0)
+ 278 018c 90E0      		ldi r25,hi8(0)
+ 279               	/* epilogue: frame size=0 */
+ 280 018e 1F91      		pop r17
+ 281 0190 0F91      		pop r16
+ 282 0192 FF90      		pop r15
+ 283 0194 EF90      		pop r14
+ 284 0196 DF90      		pop r13
+ 285 0198 0895      		ret
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 6
+
+
+ 286               	/* epilogue end (size=6) */
+ 287               	/* function VsSetVolume size 32 (21) */
+ 288               		.size	VsSetVolume, .-VsSetVolume
+ 289               	.global	VsPlayerSetMode
+ 290               		.type	VsPlayerSetMode, @function
+ 291               	VsPlayerSetMode:
+ 292               	/* prologue: frame size=0 */
+ 293 019a FF92      		push r15
+ 294 019c 0F93      		push r16
+ 295 019e 1F93      		push r17
+ 296               	/* prologue end (size=3) */
+ 297 01a0 8C01      		movw r16,r24
+ 298 01a2 80E0      		ldi r24,lo8(0)
+ 299 01a4 0E94 0000 		call VsPlayerInterrupts
+ 300 01a8 F82E      		mov r15,r24
+ 301 01aa 1C60      		ori r17,hi8(3072)
+ 302 01ac B801      		movw r22,r16
+ 303 01ae 80E0      		ldi r24,lo8(0)
+ 304 01b0 0E94 0000 		call VsRegWrite
+ 305 01b4 8F2D      		mov r24,r15
+ 306 01b6 0E94 0000 		call VsPlayerInterrupts
+ 307 01ba 80E0      		ldi r24,lo8(0)
+ 308 01bc 90E0      		ldi r25,hi8(0)
+ 309               	/* epilogue: frame size=0 */
+ 310 01be 1F91      		pop r17
+ 311 01c0 0F91      		pop r16
+ 312 01c2 FF90      		pop r15
+ 313 01c4 0895      		ret
+ 314               	/* epilogue end (size=4) */
+ 315               	/* function VsPlayerSetMode size 22 (15) */
+ 316               		.size	VsPlayerSetMode, .-VsPlayerSetMode
+ 317               	.global	VsBeepStartRaw
+ 318               		.type	VsBeepStartRaw, @function
+ 319               	VsBeepStartRaw:
+ 320               	/* prologue: frame size=1 */
+ 321 01c6 1F93      		push r17
+ 322 01c8 CF93      		push r28
+ 323 01ca DF93      		push r29
+ 324 01cc CDB7      		in r28,__SP_L__
+ 325 01ce DEB7      		in r29,__SP_H__
+ 326 01d0 2197      		sbiw r28,1
+ 327 01d2 0FB6      		in __tmp_reg__,__SREG__
+ 328 01d4 F894      		cli
+ 329 01d6 DEBF      		out __SP_H__,r29
+ 330 01d8 0FBE      		out __SREG__,__tmp_reg__
+ 331 01da CDBF      		out __SP_L__,r28
+ 332               	/* prologue end (size=11) */
+ 333 01dc 8983      		std Y+1,r24
+ 334 01de 80E0      		ldi r24,lo8(0)
+ 335 01e0 0E94 0000 		call VsPlayerInterrupts
+ 336 01e4 182F      		mov r17,r24
+ 337 01e6 80E2      		ldi r24,lo8(32)
+ 338 01e8 90E0      		ldi r25,hi8(32)
+ 339 01ea 0E94 0000 		call VsPlayerSetMode
+ 340 01ee 63E0      		ldi r22,lo8(3)
+ 341 01f0 70E0      		ldi r23,hi8(3)
+ 342 01f2 80E0      		ldi r24,lo8(on.2553)
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 7
+
+
+ 343 01f4 90E0      		ldi r25,hi8(on.2553)
+ 344 01f6 0E94 0000 		call VsSdiWrite_P
+ 345 01fa 61E0      		ldi r22,lo8(1)
+ 346 01fc 70E0      		ldi r23,hi8(1)
+ 347 01fe CE01      		movw r24,r28
+ 348 0200 0196      		adiw r24,1
+ 349 0202 0E94 0000 		call VsSdiWrite
+ 350 0206 64E0      		ldi r22,lo8(4)
+ 351 0208 70E0      		ldi r23,hi8(4)
+ 352 020a 80E0      		ldi r24,lo8(end.2554)
+ 353 020c 90E0      		ldi r25,hi8(end.2554)
+ 354 020e 0E94 0000 		call VsSdiWrite_P
+ 355 0212 812F      		mov r24,r17
+ 356 0214 0E94 0000 		call VsPlayerInterrupts
+ 357 0218 80E0      		ldi r24,lo8(0)
+ 358 021a 90E0      		ldi r25,hi8(0)
+ 359               	/* epilogue: frame size=1 */
+ 360 021c 2196      		adiw r28,1
+ 361 021e 0FB6      		in __tmp_reg__,__SREG__
+ 362 0220 F894      		cli
+ 363 0222 DEBF      		out __SP_H__,r29
+ 364 0224 0FBE      		out __SREG__,__tmp_reg__
+ 365 0226 CDBF      		out __SP_L__,r28
+ 366 0228 DF91      		pop r29
+ 367 022a CF91      		pop r28
+ 368 022c 1F91      		pop r17
+ 369 022e 0895      		ret
+ 370               	/* epilogue end (size=10) */
+ 371               	/* function VsBeepStartRaw size 53 (32) */
+ 372               		.size	VsBeepStartRaw, .-VsBeepStartRaw
+ 373               	.global	VsBeepStart
+ 374               		.type	VsBeepStart, @function
+ 375               	VsBeepStart:
+ 376               	/* prologue: frame size=0 */
+ 377               	/* prologue end (size=0) */
+ 378 0230 282F      		mov r18,r24
+ 379 0232 3327      		clr r19
+ 380 0234 2770      		andi r18,lo8(7)
+ 381 0236 3070      		andi r19,hi8(7)
+ 382 0238 C901      		movw r24,r18
+ 383 023a 53E0      		ldi r21,3
+ 384 023c 880F      	1:	lsl r24
+ 385 023e 991F      		rol r25
+ 386 0240 5A95      		dec r21
+ 387 0242 01F4      		brne 1b
+ 388 0244 820F      		add r24,r18
+ 389 0246 931F      		adc r25,r19
+ 390 0248 885C      		subi r24,lo8(-(56))
+ 391 024a 0E94 0000 		call VsBeepStartRaw
+ 392               	/* epilogue: frame size=0 */
+ 393 024e 0895      		ret
+ 394               	/* epilogue end (size=1) */
+ 395               	/* function VsBeepStart size 16 (15) */
+ 396               		.size	VsBeepStart, .-VsBeepStart
+ 397               	.global	VsBeep
+ 398               		.type	VsBeep, @function
+ 399               	VsBeep:
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 8
+
+
+ 400               	/* prologue: frame size=1 */
+ 401 0250 BF92      		push r11
+ 402 0252 CF92      		push r12
+ 403 0254 DF92      		push r13
+ 404 0256 EF92      		push r14
+ 405 0258 FF92      		push r15
+ 406 025a 0F93      		push r16
+ 407 025c 1F93      		push r17
+ 408 025e CF93      		push r28
+ 409 0260 DF93      		push r29
+ 410 0262 CDB7      		in r28,__SP_L__
+ 411 0264 DEB7      		in r29,__SP_H__
+ 412 0266 2197      		sbiw r28,1
+ 413 0268 0FB6      		in __tmp_reg__,__SREG__
+ 414 026a F894      		cli
+ 415 026c DEBF      		out __SP_H__,r29
+ 416 026e 0FBE      		out __SREG__,__tmp_reg__
+ 417 0270 CDBF      		out __SP_L__,r28
+ 418               	/* prologue end (size=17) */
+ 419 0272 8983      		std Y+1,r24
+ 420 0274 7B01      		movw r14,r22
+ 421 0276 80E0      		ldi r24,lo8(0)
+ 422 0278 0E94 0000 		call VsPlayerInterrupts
+ 423 027c B82E      		mov r11,r24
+ 424 027e 80E2      		ldi r24,lo8(32)
+ 425 0280 90E0      		ldi r25,hi8(32)
+ 426 0282 0E94 0000 		call VsPlayerSetMode
+ 427 0286 8981      		ldd r24,Y+1
+ 428 0288 8295      		swap r24
+ 429 028a 807F      		andi r24,0xf0
+ 430 028c 885C      		subi r24,lo8(-(56))
+ 431 028e 8983      		std Y+1,r24
+ 432 0290 63E0      		ldi r22,lo8(3)
+ 433 0292 70E0      		ldi r23,hi8(3)
+ 434 0294 80E0      		ldi r24,lo8(on.2527)
+ 435 0296 90E0      		ldi r25,hi8(on.2527)
+ 436 0298 0E94 0000 		call VsSdiWrite_P
+ 437 029c 61E0      		ldi r22,lo8(1)
+ 438 029e 70E0      		ldi r23,hi8(1)
+ 439 02a0 CE01      		movw r24,r28
+ 440 02a2 0196      		adiw r24,1
+ 441 02a4 0E94 0000 		call VsSdiWrite
+ 442 02a8 60E0      		ldi r22,lo8(end.2529)
+ 443 02aa C62E      		mov r12,r22
+ 444 02ac 60E0      		ldi r22,hi8(end.2529)
+ 445 02ae D62E      		mov r13,r22
+ 446 02b0 64E0      		ldi r22,lo8(4)
+ 447 02b2 70E0      		ldi r23,hi8(4)
+ 448 02b4 C601      		movw r24,r12
+ 449 02b6 0E94 0000 		call VsSdiWrite_P
+ 450 02ba 8E2D      		mov r24,r14
+ 451 02bc 0E94 0000 		call NutDelay
+ 452 02c0 0027      		clr r16
+ 453 02c2 1127      		clr r17
+ 454 02c4 C801      		movw r24,r16
+ 455 02c6 B701      		movw r22,r14
+ 456 02c8 0E94 0000 		call NutSleep
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 9
+
+
+ 457 02cc 64E0      		ldi r22,lo8(4)
+ 458 02ce 70E0      		ldi r23,hi8(4)
+ 459 02d0 80E0      		ldi r24,lo8(off.2528)
+ 460 02d2 90E0      		ldi r25,hi8(off.2528)
+ 461 02d4 0E94 0000 		call VsSdiWrite_P
+ 462 02d8 64E0      		ldi r22,lo8(4)
+ 463 02da 70E0      		ldi r23,hi8(4)
+ 464 02dc C601      		movw r24,r12
+ 465 02de 0E94 0000 		call VsSdiWrite_P
+ 466 02e2 8B2D      		mov r24,r11
+ 467 02e4 0E94 0000 		call VsPlayerInterrupts
+ 468 02e8 80E0      		ldi r24,lo8(0)
+ 469 02ea 90E0      		ldi r25,hi8(0)
+ 470               	/* epilogue: frame size=1 */
+ 471 02ec 2196      		adiw r28,1
+ 472 02ee 0FB6      		in __tmp_reg__,__SREG__
+ 473 02f0 F894      		cli
+ 474 02f2 DEBF      		out __SP_H__,r29
+ 475 02f4 0FBE      		out __SREG__,__tmp_reg__
+ 476 02f6 CDBF      		out __SP_L__,r28
+ 477 02f8 DF91      		pop r29
+ 478 02fa CF91      		pop r28
+ 479 02fc 1F91      		pop r17
+ 480 02fe 0F91      		pop r16
+ 481 0300 FF90      		pop r15
+ 482 0302 EF90      		pop r14
+ 483 0304 DF90      		pop r13
+ 484 0306 CF90      		pop r12
+ 485 0308 BF90      		pop r11
+ 486 030a 0895      		ret
+ 487               	/* epilogue end (size=16) */
+ 488               	/* function VsBeep size 94 (61) */
+ 489               		.size	VsBeep, .-VsBeep
+ 490               	.global	VsPlayerReset
+ 491               		.type	VsPlayerReset, @function
+ 492               	VsPlayerReset:
+ 493               	/* prologue: frame size=0 */
+ 494 030c 0F93      		push r16
+ 495 030e 1F93      		push r17
+ 496               	/* prologue end (size=2) */
+ 497 0310 8C01      		movw r16,r24
+ 498 0312 80E0      		ldi r24,lo8(0)
+ 499 0314 0E94 0000 		call VsPlayerInterrupts
+ 500 0318 1092 0000 		sts vs_status,__zero_reg__
+ 501 031c C801      		movw r24,r16
+ 502 031e 8460      		ori r24,lo8(4)
+ 503 0320 0E94 0000 		call VsPlayerSetMode
+ 504 0324 8AE0      		ldi r24,lo8(10)
+ 505 0326 0E94 0000 		call NutDelay
+ 506 032a 80E4      		ldi r24,lo8(64)
+ 507 032c 8CBB      		out 60-0x20,r24
+ 508 032e 80E0      		ldi r24,lo8(0)
+ 509 0330 90E0      		ldi r25,hi8(0)
+ 510               	/* epilogue: frame size=0 */
+ 511 0332 1F91      		pop r17
+ 512 0334 0F91      		pop r16
+ 513 0336 0895      		ret
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 10
+
+
+ 514               	/* epilogue end (size=3) */
+ 515               	/* function VsPlayerReset size 22 (17) */
+ 516               		.size	VsPlayerReset, .-VsPlayerReset
+ 517               		.type	VsRegRead, @function
+ 518               	VsRegRead:
+ 519               	/* prologue: frame size=0 */
+ 520 0338 DF92      		push r13
+ 521 033a EF92      		push r14
+ 522 033c FF92      		push r15
+ 523 033e 0F93      		push r16
+ 524 0340 1F93      		push r17
+ 525               	/* prologue end (size=5) */
+ 526 0342 182F      		mov r17,r24
+ 527 0344 0E94 0000 		call SPIgetmode
+ 528 0348 D82E      		mov r13,r24
+ 529 034a 80E0      		ldi r24,lo8(0)
+ 530 034c 0E94 0000 		call SPImode
+ 531 0350 80E0      		ldi r24,lo8(0)
+ 532 0352 90E0      		ldi r25,hi8(0)
+ 533 0354 0E94 0000 		call SPIselect
+ 534 0358 2C98      		cbi 37-0x20,4
+ 535 035a 83E0      		ldi r24,lo8(3)
+ 536 035c 0E94 0000 		call SPIputByte
+ 537 0360 812F      		mov r24,r17
+ 538 0362 0E94 0000 		call SPIputByte
+ 539 0366 0E94 0000 		call SPIgetByte
+ 540 036a E82E      		mov r14,r24
+ 541 036c FF24      		clr r15
+ 542 036e FE2C      		mov r15,r14
+ 543 0370 EE24      		clr r14
+ 544 0372 0E94 0000 		call SPIgetByte
+ 545 0376 082F      		mov r16,r24
+ 546 0378 2C9A      		sbi 37-0x20,4
+ 547 037a 0E94 0000 		call SPIdeselect
+ 548 037e 8D2D      		mov r24,r13
+ 549 0380 0E94 0000 		call SPImode
+ 550 0384 1127      		clr r17
+ 551 0386 C701      		movw r24,r14
+ 552 0388 802B      		or r24,r16
+ 553 038a 912B      		or r25,r17
+ 554               	/* epilogue: frame size=0 */
+ 555 038c 1F91      		pop r17
+ 556 038e 0F91      		pop r16
+ 557 0390 FF90      		pop r15
+ 558 0392 EF90      		pop r14
+ 559 0394 DF90      		pop r13
+ 560 0396 0895      		ret
+ 561               	/* epilogue end (size=6) */
+ 562               	/* function VsRegRead size 48 (37) */
+ 563               		.size	VsRegRead, .-VsRegRead
+ 564               	.global	VsGetVolume
+ 565               		.type	VsGetVolume, @function
+ 566               	VsGetVolume:
+ 567               	/* prologue: frame size=0 */
+ 568 0398 FF92      		push r15
+ 569 039a 0F93      		push r16
+ 570 039c 1F93      		push r17
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 11
+
+
+ 571               	/* prologue end (size=3) */
+ 572 039e 80E0      		ldi r24,lo8(0)
+ 573 03a0 0E94 0000 		call VsPlayerInterrupts
+ 574 03a4 F82E      		mov r15,r24
+ 575 03a6 8BE0      		ldi r24,lo8(11)
+ 576 03a8 0E94 0000 		call VsRegRead
+ 577 03ac 8C01      		movw r16,r24
+ 578 03ae 8F2D      		mov r24,r15
+ 579 03b0 0E94 0000 		call VsPlayerInterrupts
+ 580 03b4 C801      		movw r24,r16
+ 581               	/* epilogue: frame size=0 */
+ 582 03b6 1F91      		pop r17
+ 583 03b8 0F91      		pop r16
+ 584 03ba FF90      		pop r15
+ 585 03bc 0895      		ret
+ 586               	/* epilogue end (size=4) */
+ 587               	/* function VsGetVolume size 19 (12) */
+ 588               		.size	VsGetVolume, .-VsGetVolume
+ 589               	.global	VsRegInfo
+ 590               		.type	VsRegInfo, @function
+ 591               	VsRegInfo:
+ 592               	/* prologue: frame size=0 */
+ 593 03be FF92      		push r15
+ 594 03c0 0F93      		push r16
+ 595 03c2 1F93      		push r17
+ 596               	/* prologue end (size=3) */
+ 597 03c4 182F      		mov r17,r24
+ 598 03c6 80E0      		ldi r24,lo8(0)
+ 599 03c8 0E94 0000 		call VsPlayerInterrupts
+ 600 03cc F82E      		mov r15,r24
+ 601 03ce 812F      		mov r24,r17
+ 602 03d0 0E94 0000 		call VsRegRead
+ 603 03d4 8C01      		movw r16,r24
+ 604 03d6 8F2D      		mov r24,r15
+ 605 03d8 0E94 0000 		call VsPlayerInterrupts
+ 606 03dc C801      		movw r24,r16
+ 607               	/* epilogue: frame size=0 */
+ 608 03de 1F91      		pop r17
+ 609 03e0 0F91      		pop r16
+ 610 03e2 FF90      		pop r15
+ 611 03e4 0895      		ret
+ 612               	/* epilogue end (size=4) */
+ 613               	/* function VsRegInfo size 20 (13) */
+ 614               		.size	VsRegInfo, .-VsRegInfo
+ 615               	.global	VsStreamValid
+ 616               		.type	VsStreamValid, @function
+ 617               	VsStreamValid:
+ 618               	/* prologue: frame size=0 */
+ 619               	/* prologue end (size=0) */
+ 620 03e6 89E0      		ldi r24,lo8(9)
+ 621 03e8 0E94 0000 		call VsRegInfo
+ 622 03ec 9C01      		movw r18,r24
+ 623 03ee 8FEF      		ldi r24,hi8(-31)
+ 624 03f0 213E      		cpi r18,lo8(-31)
+ 625 03f2 3807      		cpc r19,r24
+ 626 03f4 00F4      		brsh .L52
+ 627 03f6 8DE4      		ldi r24,hi8(19796)
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 12
+
+
+ 628 03f8 2435      		cpi r18,lo8(19796)
+ 629 03fa 3807      		cpc r19,r24
+ 630 03fc 01F0      		breq .L56
+ 631 03fe 8DE4      		ldi r24,hi8(19797)
+ 632 0400 2535      		cpi r18,lo8(19797)
+ 633 0402 3807      		cpc r19,r24
+ 634 0404 00F4      		brsh .L57
+ 635 0406 81E4      		ldi r24,hi8(16724)
+ 636 0408 2435      		cpi r18,lo8(16724)
+ 637 040a 3807      		cpc r19,r24
+ 638 040c 01F0      		breq .L55
+ 639 040e 8DE4      		ldi r24,hi8(19764)
+ 640 0410 2433      		cpi r18,lo8(19764)
+ 641 0412 3807      		cpc r19,r24
+ 642 0414 01F0      		breq .L55
+ 643 0416 81E4      		ldi r24,hi8(16708)
+ 644 0418 2434      		cpi r18,lo8(16708)
+ 645 041a 3807      		cpc r19,r24
+ 646 041c 01F4      		brne .L54
+ 647 041e 00C0      		rjmp .L55
+ 648               	.L57:
+ 649 0420 87E5      		ldi r24,hi8(22381)
+ 650 0422 2D36      		cpi r18,lo8(22381)
+ 651 0424 3807      		cpc r19,r24
+ 652 0426 01F0      		breq .L56
+ 653 0428 87E5      		ldi r24,hi8(22382)
+ 654 042a 2E36      		cpi r18,lo8(22382)
+ 655 042c 3807      		cpc r19,r24
+ 656 042e 00F4      		brsh .L58
+ 657 0430 87E5      		ldi r24,hi8(22349)
+ 658 0432 2D34      		cpi r18,lo8(22349)
+ 659 0434 3807      		cpc r19,r24
+ 660 0436 01F4      		brne .L54
+ 661 0438 00C0      		rjmp .L55
+ 662               	.L58:
+ 663 043a 86E7      		ldi r24,hi8(30309)
+ 664 043c 2536      		cpi r18,lo8(30309)
+ 665 043e 3807      		cpc r19,r24
+ 666 0440 01F0      		breq .L55
+ 667 0442 8FEF      		ldi r24,hi8(-32)
+ 668 0444 203E      		cpi r18,lo8(-32)
+ 669 0446 3807      		cpc r19,r24
+ 670 0448 01F4      		brne .L54
+ 671 044a 00C0      		rjmp .L56
+ 672               	.L55:
+ 673 044c 8091 0000 		lds r24,g_vs_type
+ 674 0450 9091 0000 		lds r25,(g_vs_type)+1
+ 675 0454 0397      		sbiw r24,3
+ 676 0456 01F4      		brne .L56
+ 677 0458 00C0      		rjmp .L54
+ 678               	.L52:
+ 679 045a 20EE      		ldi r18,lo8(-32)
+ 680 045c 3FEF      		ldi r19,hi8(-32)
+ 681 045e 00C0      		rjmp .L56
+ 682               	.L54:
+ 683 0460 80E0      		ldi r24,lo8(0)
+ 684 0462 90E0      		ldi r25,hi8(0)
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 13
+
+
+ 685 0464 0895      		ret
+ 686               	.L56:
+ 687 0466 C901      		movw r24,r18
+ 688 0468 0895      		ret
+ 689               	/* epilogue: frame size=0 */
+ 690               	/* epilogue: noreturn */
+ 691               	/* epilogue end (size=0) */
+ 692               	/* function VsStreamValid size 67 (67) */
+ 693               		.size	VsStreamValid, .-VsStreamValid
+ 694               	.global	VsPlayerInit
+ 695               		.type	VsPlayerInit, @function
+ 696               	VsPlayerInit:
+ 697               	/* prologue: frame size=0 */
+ 698               	/* prologue end (size=0) */
+ 699 046a 80E0      		ldi r24,lo8(0)
+ 700 046c 0E94 0000 		call VsPlayerInterrupts
+ 701 0470 2F98      		cbi 37-0x20,7
+ 702 0472 2C9A      		sbi 37-0x20,4
+ 703 0474 2898      		cbi 37-0x20,0
+ 704 0476 209A      		sbi 36-0x20,0
+ 705 0478 84E0      		ldi r24,lo8(4)
+ 706 047a 0E94 0000 		call NutDelay
+ 707 047e 80E0      		ldi r24,lo8(0)
+ 708 0480 0E94 0000 		call SPImode
+ 709 0484 1092 0000 		sts vs_status,__zero_reg__
+ 710 0488 2F9A      		sbi 37-0x20,7
+ 711 048a 84E0      		ldi r24,lo8(4)
+ 712 048c 0E94 0000 		call NutDelay
+ 713 0490 81E0      		ldi r24,lo8(1)
+ 714 0492 0E94 0000 		call VsRegRead
+ 715 0496 E4E0      		ldi r30,4
+ 716 0498 9695      	1:	lsr r25
+ 717 049a 8795      		ror r24
+ 718 049c EA95      		dec r30
+ 719 049e 01F4      		brne 1b
+ 720 04a0 8770      		andi r24,lo8(7)
+ 721 04a2 9070      		andi r25,hi8(7)
+ 722 04a4 9093 0000 		sts (g_vs_type)+1,r25
+ 723 04a8 8093 0000 		sts g_vs_type,r24
+ 724 04ac 0397      		sbiw r24,3
+ 725 04ae 01F4      		brne .L62
+ 726 04b0 60E0      		ldi r22,lo8(-8192)
+ 727 04b2 70EE      		ldi r23,hi8(-8192)
+ 728 04b4 00C0      		rjmp .L69
+ 729               	.L62:
+ 730 04b6 60E0      		ldi r22,lo8(-26624)
+ 731 04b8 78E9      		ldi r23,hi8(-26624)
+ 732               	.L69:
+ 733 04ba 83E0      		ldi r24,lo8(3)
+ 734 04bc 0E94 0000 		call VsRegWrite
+ 735 04c0 82E3      		ldi r24,lo8(50)
+ 736 04c2 0E94 0000 		call NutDelay
+ 737 04c6 80E0      		ldi r24,lo8(0)
+ 738 04c8 90E0      		ldi r25,hi8(0)
+ 739 04ca 0E94 0000 		call VsPlayerSetMode
+ 740 04ce 60E0      		ldi r22,lo8(0)
+ 741 04d0 80E0      		ldi r24,lo8(0)
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 14
+
+
+ 742 04d2 0E94 0000 		call VsSetVolume
+ 743 04d6 82E3      		ldi r24,lo8(50)
+ 744 04d8 0E94 0000 		call NutDelay
+ 745 04dc 8091 0000 		lds r24,g_vs_type
+ 746 04e0 9091 0000 		lds r25,(g_vs_type)+1
+ 747 04e4 0397      		sbiw r24,3
+ 748 04e6 0297      		sbiw r24,2
+ 749 04e8 00F4      		brsh .L65
+ 750 04ea 82E0      		ldi r24,lo8(2)
+ 751 04ec 00C0      		rjmp .L70
+ 752               	.L65:
+ 753 04ee 81E0      		ldi r24,lo8(1)
+ 754               	.L70:
+ 755 04f0 0E94 0000 		call SPImode
+ 756 04f4 40E0      		ldi r20,lo8(0)
+ 757 04f6 50E0      		ldi r21,hi8(0)
+ 758 04f8 60E0      		ldi r22,lo8(gs(VsPlayerFeed))
+ 759 04fa 70E0      		ldi r23,hi8(gs(VsPlayerFeed))
+ 760 04fc 80E0      		ldi r24,lo8(sig_INTERRUPT6)
+ 761 04fe 90E0      		ldi r25,hi8(sig_INTERRUPT6)
+ 762 0500 0E94 0000 		call NutRegisterIrqHandler
+ 763 0504 66E0      		ldi r22,lo8(6)
+ 764 0506 70E0      		ldi r23,hi8(6)
+ 765 0508 80E0      		ldi r24,lo8(sig_INTERRUPT6)
+ 766 050a 90E0      		ldi r25,hi8(sig_INTERRUPT6)
+ 767 050c 0E94 0000 		call NutIrqSetMode
+ 768 0510 80E4      		ldi r24,lo8(64)
+ 769 0512 8CBB      		out 60-0x20,r24
+ 770 0514 80E0      		ldi r24,lo8(0)
+ 771 0516 90E0      		ldi r25,hi8(0)
+ 772               	/* epilogue: frame size=0 */
+ 773 0518 0895      		ret
+ 774               	/* epilogue end (size=1) */
+ 775               	/* function VsPlayerInit size 90 (89) */
+ 776               		.size	VsPlayerInit, .-VsPlayerInit
+ 777               		.type	VsPlayerFeed, @function
+ 778               	VsPlayerFeed:
+ 779               	/* prologue: frame size=2 */
+ 780 051a BF92      		push r11
+ 781 051c CF92      		push r12
+ 782 051e DF92      		push r13
+ 783 0520 EF92      		push r14
+ 784 0522 FF92      		push r15
+ 785 0524 0F93      		push r16
+ 786 0526 1F93      		push r17
+ 787 0528 CF93      		push r28
+ 788 052a DF93      		push r29
+ 789 052c CDB7      		in r28,__SP_L__
+ 790 052e DEB7      		in r29,__SP_H__
+ 791 0530 2297      		sbiw r28,2
+ 792 0532 0FB6      		in __tmp_reg__,__SREG__
+ 793 0534 F894      		cli
+ 794 0536 DEBF      		out __SP_H__,r29
+ 795 0538 0FBE      		out __SREG__,__tmp_reg__
+ 796 053a CDBF      		out __SP_L__,r28
+ 797               	/* prologue end (size=17) */
+ 798 053c 8091 0000 		lds r24,vs_status
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 15
+
+
+ 799 0540 8130      		cpi r24,lo8(1)
+ 800 0542 01F0      		breq .+2
+ 801 0544 00C0      		rjmp .L87
+ 802 0546 669B      		sbis 44-0x20,6
+ 803 0548 00C0      		rjmp .L87
+ 804 054a 80E0      		ldi r24,lo8(0)
+ 805 054c 0E94 0000 		call VsPlayerInterrupts
+ 806 0550 B82E      		mov r11,r24
+ 807               	/* #APP */
+ 808 0552 7894      		sei
+ 809               	/* #NOAPP */
+ 810 0554 1A82      		std Y+2,__zero_reg__
+ 811 0556 1982      		std Y+1,__zero_reg__
+ 812 0558 80E0      		ldi r24,lo8(0)
+ 813 055a 90E0      		ldi r25,hi8(0)
+ 814 055c 0E94 0000 		call SPIselect
+ 815 0560 A0E2      		ldi r26,lo8(32)
+ 816 0562 EA2E      		mov r14,r26
+ 817 0564 F12C      		mov r15,__zero_reg__
+ 818 0566 00E0      		ldi r16,lo8(0)
+ 819 0568 10E0      		ldi r17,hi8(0)
+ 820 056a CC24      		clr r12
+ 821 056c DD24      		clr r13
+ 822 056e 00C0      		rjmp .L93
+ 823               	.L76:
+ 824 0570 FFE1      		ldi r31,lo8(31)
+ 825 0572 EF2E      		mov r14,r31
+ 826 0574 F12C      		mov r15,__zero_reg__
+ 827               	.L93:
+ 828 0576 8981      		ldd r24,Y+1
+ 829 0578 9A81      		ldd r25,Y+2
+ 830 057a C816      		cp r12,r24
+ 831 057c D906      		cpc r13,r25
+ 832 057e 00F0      		brlo .L77
+ 833 0580 C114      		cp r12,__zero_reg__
+ 834 0582 D104      		cpc r13,__zero_reg__
+ 835 0584 01F0      		breq .L79
+ 836 0586 C601      		movw r24,r12
+ 837 0588 0E94 0000 		call NutSegBufReadCommit
+ 838               	.L79:
+ 839 058c CE01      		movw r24,r28
+ 840 058e 0196      		adiw r24,1
+ 841 0590 0E94 0000 		call NutSegBufReadRequest
+ 842 0594 8C01      		movw r16,r24
+ 843 0596 8981      		ldd r24,Y+1
+ 844 0598 9A81      		ldd r25,Y+2
+ 845 059a 892B      		or r24,r25
+ 846 059c 01F0      		breq .L81
+ 847 059e CC24      		clr r12
+ 848 05a0 DD24      		clr r13
+ 849 05a2 00C0      		rjmp .L83
+ 850               	.L81:
+ 851 05a4 82E0      		ldi r24,lo8(2)
+ 852 05a6 8093 0000 		sts vs_status,r24
+ 853 05aa CC24      		clr r12
+ 854 05ac DD24      		clr r13
+ 855 05ae 00C0      		rjmp .L84
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 16
+
+
+ 856               	.L77:
+ 857 05b0 892B      		or r24,r25
+ 858 05b2 01F0      		breq .L85
+ 859               	.L83:
+ 860 05b4 F801      		movw r30,r16
+ 861 05b6 8191      		ld r24,Z+
+ 862 05b8 8F01      		movw r16,r30
+ 863 05ba 0E94 0000 		call SPIputByte
+ 864 05be 0894      		sec
+ 865 05c0 C11C      		adc r12,__zero_reg__
+ 866 05c2 D11C      		adc r13,__zero_reg__
+ 867               	.L85:
+ 868 05c4 6699      		sbic 44-0x20,6
+ 869 05c6 00C0      		rjmp .L76
+ 870 05c8 0894      		sec
+ 871 05ca E108      		sbc r14,__zero_reg__
+ 872 05cc F108      		sbc r15,__zero_reg__
+ 873 05ce E114      		cp r14,__zero_reg__
+ 874 05d0 F104      		cpc r15,__zero_reg__
+ 875 05d2 01F4      		brne .L93
+ 876               	.L84:
+ 877 05d4 0E94 0000 		call SPIdeselect
+ 878 05d8 C601      		movw r24,r12
+ 879 05da 0E94 0000 		call NutSegBufReadLast
+ 880 05de 8B2D      		mov r24,r11
+ 881 05e0 0E94 0000 		call VsPlayerInterrupts
+ 882               	.L87:
+ 883               	/* epilogue: frame size=2 */
+ 884 05e4 2296      		adiw r28,2
+ 885 05e6 0FB6      		in __tmp_reg__,__SREG__
+ 886 05e8 F894      		cli
+ 887 05ea DEBF      		out __SP_H__,r29
+ 888 05ec 0FBE      		out __SREG__,__tmp_reg__
+ 889 05ee CDBF      		out __SP_L__,r28
+ 890 05f0 DF91      		pop r29
+ 891 05f2 CF91      		pop r28
+ 892 05f4 1F91      		pop r17
+ 893 05f6 0F91      		pop r16
+ 894 05f8 FF90      		pop r15
+ 895 05fa EF90      		pop r14
+ 896 05fc DF90      		pop r13
+ 897 05fe CF90      		pop r12
+ 898 0600 BF90      		pop r11
+ 899 0602 0895      		ret
+ 900               	/* epilogue end (size=16) */
+ 901               	/* function VsPlayerFeed size 118 (85) */
+ 902               		.size	VsPlayerFeed, .-VsPlayerFeed
+ 903               	.global	VsPlayerKick
+ 904               		.type	VsPlayerKick, @function
+ 905               	VsPlayerKick:
+ 906               	/* prologue: frame size=0 */
+ 907 0604 0F93      		push r16
+ 908 0606 1F93      		push r17
+ 909 0608 CF93      		push r28
+ 910 060a DF93      		push r29
+ 911               	/* prologue end (size=4) */
+ 912 060c 8091 0000 		lds r24,vs_status
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 17
+
+
+ 913 0610 8130      		cpi r24,lo8(1)
+ 914 0612 01F4      		brne .+2
+ 915 0614 00C0      		rjmp .L95
+ 916 0616 80E0      		ldi r24,lo8(0)
+ 917 0618 0E94 0000 		call VsPlayerInterrupts
+ 918 061c C0E0      		ldi r28,lo8(dtab)
+ 919 061e D0E0      		ldi r29,hi8(dtab)
+ 920 0620 FE01      		movw r30,r28
+ 921               	/* #APP */
+ 922 0622 6591      		lpm r22, Z+
+ 923 0624 7491      		lpm r23, Z
+ 924               		
+ 925               	/* #NOAPP */
+ 926 0626 E0E0      		ldi r30,lo8(atab)
+ 927 0628 F0E0      		ldi r31,hi8(atab)
+ 928               	/* #APP */
+ 929 062a E491      		lpm r30, Z
+ 930               		
+ 931               	/* #NOAPP */
+ 932 062c 8E2F      		mov r24,r30
+ 933 062e 0E94 0000 		call VsRegWrite
+ 934 0632 00E0      		ldi r16,lo8(0)
+ 935 0634 10E0      		ldi r17,hi8(0)
+ 936 0636 00C0      		rjmp .L97
+ 937               	.L98:
+ 938 0638 FE01      		movw r30,r28
+ 939               	/* #APP */
+ 940 063a 6591      		lpm r22, Z+
+ 941 063c 7491      		lpm r23, Z
+ 942               		
+ 943               	/* #NOAPP */
+ 944 063e F801      		movw r30,r16
+ 945 0640 E050      		subi r30,lo8(-(atab))
+ 946 0642 F040      		sbci r31,hi8(-(atab))
+ 947               	/* #APP */
+ 948 0644 E491      		lpm r30, Z
+ 949               		
+ 950               	/* #NOAPP */
+ 951 0646 8E2F      		mov r24,r30
+ 952 0648 0E94 0000 		call VsRegWrite
+ 953 064c C801      		movw r24,r16
+ 954 064e 64EF      		ldi r22,lo8(500)
+ 955 0650 71E0      		ldi r23,hi8(500)
+ 956 0652 0E94 0000 		call __divmodhi4
+ 957 0656 892B      		or r24,r25
+ 958 0658 01F4      		brne .L99
+ 959               	.L97:
+ 960 065a 0E94 0000 		call WatchDogRestart
+ 961               	.L99:
+ 962 065e 0F5F      		subi r16,lo8(-(1))
+ 963 0660 1F4F      		sbci r17,hi8(-(1))
+ 964 0662 2296      		adiw r28,2
+ 965 0664 81E0      		ldi r24,hi8(437)
+ 966 0666 053B      		cpi r16,lo8(437)
+ 967 0668 1807      		cpc r17,r24
+ 968 066a 01F4      		brne .L98
+ 969 066c 81E0      		ldi r24,lo8(1)
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 18
+
+
+ 970 066e 8093 0000 		sts vs_status,r24
+ 971 0672 80E0      		ldi r24,lo8(0)
+ 972 0674 90E0      		ldi r25,hi8(0)
+ 973 0676 0E94 0000 		call VsPlayerFeed
+ 974 067a 81E0      		ldi r24,lo8(1)
+ 975 067c 0E94 0000 		call VsPlayerInterrupts
+ 976               	.L95:
+ 977 0680 80E0      		ldi r24,lo8(0)
+ 978 0682 90E0      		ldi r25,hi8(0)
+ 979               	/* epilogue: frame size=0 */
+ 980 0684 DF91      		pop r29
+ 981 0686 CF91      		pop r28
+ 982 0688 1F91      		pop r17
+ 983 068a 0F91      		pop r16
+ 984 068c 0895      		ret
+ 985               	/* epilogue end (size=5) */
+ 986               	/* function VsPlayerKick size 83 (74) */
+ 987               		.size	VsPlayerKick, .-VsPlayerKick
+ 988               	.global	VsMemoryTest
+ 989               		.type	VsMemoryTest, @function
+ 990               	VsMemoryTest:
+ 991               	/* prologue: frame size=0 */
+ 992 068e 1F93      		push r17
+ 993 0690 CF93      		push r28
+ 994 0692 DF93      		push r29
+ 995               	/* prologue end (size=3) */
+ 996 0694 80E0      		ldi r24,lo8(0)
+ 997 0696 90E0      		ldi r25,hi8(0)
+ 998 0698 0E94 0000 		call VsPlayerReset
+ 999 069c 80E2      		ldi r24,lo8(32)
+ 1000 069e 90E0      		ldi r25,hi8(32)
+ 1001 06a0 0E94 0000 		call VsPlayerSetMode
+ 1002 06a4 80E0      		ldi r24,lo8(0)
+ 1003 06a6 0E94 0000 		call VsPlayerInterrupts
+ 1004 06aa 182F      		mov r17,r24
+ 1005 06ac 68E0      		ldi r22,lo8(8)
+ 1006 06ae 70E0      		ldi r23,hi8(8)
+ 1007 06b0 80E0      		ldi r24,lo8(mtcmd.2487)
+ 1008 06b2 90E0      		ldi r25,hi8(mtcmd.2487)
+ 1009 06b4 0E94 0000 		call VsSdiWrite_P
+ 1010 06b8 88E2      		ldi r24,lo8(40)
+ 1011 06ba 0E94 0000 		call NutDelay
+ 1012 06be 88E0      		ldi r24,lo8(8)
+ 1013 06c0 0E94 0000 		call VsRegRead
+ 1014 06c4 EC01      		movw r28,r24
+ 1015 06c6 812F      		mov r24,r17
+ 1016 06c8 0E94 0000 		call VsPlayerInterrupts
+ 1017 06cc 8091 0000 		lds r24,g_vs_type
+ 1018 06d0 9091 0000 		lds r25,(g_vs_type)+1
+ 1019 06d4 0397      		sbiw r24,3
+ 1020 06d6 01F4      		brne .L105
+ 1021 06d8 80E8      		ldi r24,hi8(-32641)
+ 1022 06da CF37      		cpi r28,lo8(-32641)
+ 1023 06dc D807      		cpc r29,r24
+ 1024 06de 01F4      		brne .L105
+ 1025 06e0 C0E0      		ldi r28,lo8(0)
+ 1026 06e2 D0E0      		ldi r29,hi8(0)
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 19
+
+
+ 1027               	.L105:
+ 1028 06e4 CE01      		movw r24,r28
+ 1029               	/* epilogue: frame size=0 */
+ 1030 06e6 DF91      		pop r29
+ 1031 06e8 CF91      		pop r28
+ 1032 06ea 1F91      		pop r17
+ 1033 06ec 0895      		ret
+ 1034               	/* epilogue end (size=4) */
+ 1035               	/* function VsMemoryTest size 49 (42) */
+ 1036               		.size	VsMemoryTest, .-VsMemoryTest
+ 1037               	.global	dtab
+ 1038               		.section	.progmem.data,"a",@progbits
+ 1039               		.type	dtab, @object
+ 1040               		.size	dtab, 874
+ 1041               	dtab:
+ 1042 0000 3080      		.word	-32720
+ 1043 0002 3000      		.word	48
+ 1044 0004 1707      		.word	1815
+ 1045 0006 80B0      		.word	-20352
+ 1046 0008 173C      		.word	15383
+ 1047 000a 0600      		.word	6
+ 1048 000c 1750      		.word	20503
+ 1049 000e 003F      		.word	16128
+ 1050 0010 2400      		.word	36
+ 1051 0012 0600      		.word	6
+ 1052 0014 1620      		.word	8214
+ 1053 0016 1200      		.word	18
+ 1054 0018 8F57      		.word	22415
+ 1055 001a 0000      		.word	0
+ 1056 001c CE10      		.word	4302
+ 1057 001e 1229      		.word	10514
+ 1058 0020 0099      		.word	-26368
+ 1059 0022 0000      		.word	0
+ 1060 0024 4D00      		.word	77
+ 1061 0026 8040      		.word	16512
+ 1062 0028 4C18      		.word	6220
+ 1063 002a 0600      		.word	6
+ 1064 002c D796      		.word	-26921
+ 1065 002e 0028      		.word	10240
+ 1066 0030 550D      		.word	3413
+ 1067 0032 0000      		.word	0
+ 1068 0034 480D      		.word	3400
+ 1069 0036 0600      		.word	6
+ 1070 0038 505B      		.word	23376
+ 1071 003a 0930      		.word	12297
+ 1072 003c 4200      		.word	66
+ 1073 003e 80B0      		.word	-20352
+ 1074 0040 0180      		.word	-32767
+ 1075 0042 1442      		.word	16916
+ 1076 0044 40BC      		.word	-17344
+ 1077 0046 1828      		.word	10264
+ 1078 0048 40C7      		.word	-14528
+ 1079 004a 1336      		.word	13843
+ 1080 004c 423C      		.word	15426
+ 1081 004e 003E      		.word	15872
+ 1082 0050 03B8      		.word	-18429
+ 1083 0052 1400      		.word	20
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 20
+
+
+ 1084 0054 031B      		.word	6915
+ 1085 0056 1500      		.word	21
+ 1086 0058 C259      		.word	22978
+ 1087 005a D66F      		.word	28630
+ 1088 005c 2400      		.word	36
+ 1089 005e 0036      		.word	13824
+ 1090 0060 0398      		.word	-26621
+ 1091 0062 1228      		.word	10258
+ 1092 0064 D557      		.word	22485
+ 1093 0066 0000      		.word	0
+ 1094 0068 4D00      		.word	77
+ 1095 006a 0028      		.word	10240
+ 1096 006c 402B      		.word	11072
+ 1097 006e F336      		.word	14067
+ 1098 0070 2400      		.word	36
+ 1099 0072 4C80      		.word	-32692
+ 1100 0074 103E      		.word	15888
+ 1101 0076 1438      		.word	14356
+ 1102 0078 103E      		.word	15888
+ 1103 007a 0A78      		.word	30730
+ 1104 007c 133E      		.word	15891
+ 1105 007e 0DB8      		.word	-18419
+ 1106 0080 033E      		.word	15875
+ 1107 0082 05F8      		.word	-2043
+ 1108 0084 0600      		.word	6
+ 1109 0086 9555      		.word	21909
+ 1110 0088 0930      		.word	12297
+ 1111 008a 1514      		.word	5141
+ 1112 008c 1B00      		.word	27
+ 1113 008e D4FF      		.word	-44
+ 1114 0090 0300      		.word	3
+ 1115 0092 CEFF      		.word	-50
+ 1116 0094 0100      		.word	1
+ 1117 0096 0A00      		.word	10
+ 1118 0098 0024      		.word	9216
+ 1119 009a CE16      		.word	5838
+ 1120 009c 8AB5      		.word	-19062
+ 1121 009e 2400      		.word	36
+ 1122 00a0 92F2      		.word	-3438
+ 1123 00a2 0094      		.word	-27648
+ 1124 00a4 5261      		.word	24914
+ 1125 00a6 2400      		.word	36
+ 1126 00a8 02FE      		.word	-510
+ 1127 00aa 2400      		.word	36
+ 1128 00ac B248      		.word	18610
+ 1129 00ae 2400      		.word	36
+ 1130 00b0 4A45      		.word	17738
+ 1131 00b2 01B6      		.word	-18943
+ 1132 00b4 F336      		.word	14067
+ 1133 00b6 05D8      		.word	-10235
+ 1134 00b8 F336      		.word	14067
+ 1135 00ba 0D98      		.word	-26611
+ 1136 00bc F036      		.word	14064
+ 1137 00be 0A58      		.word	22538
+ 1138 00c0 0020      		.word	8192
+ 1139 00c2 0000      		.word	0
+ 1140 00c4 F036      		.word	14064
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 21
+
+
+ 1141 00c6 1418      		.word	6164
+ 1142 00c8 6180      		.word	-32671
+ 1143 00ca 1336      		.word	13843
+ 1144 00cc 2400      		.word	36
+ 1145 00ce 123E      		.word	15890
+ 1146 00d0 17B8      		.word	-18409
+ 1147 00d2 123E      		.word	15890
+ 1148 00d4 1538      		.word	14357
+ 1149 00d6 053E      		.word	15877
+ 1150 00d8 14B8      		.word	-18412
+ 1151 00da 2536      		.word	13861
+ 1152 00dc 2400      		.word	36
+ 1153 00de 0000      		.word	0
+ 1154 00e0 0A80      		.word	-32758
+ 1155 00e2 103E      		.word	15888
+ 1156 00e4 03B8      		.word	-18429
+ 1157 00e6 9441      		.word	16788
+ 1158 00e8 05B8      		.word	-18427
+ 1159 00ea 113E      		.word	15889
+ 1160 00ec 2400      		.word	36
+ 1161 00ee 113E      		.word	15889
+ 1162 00f0 07B8      		.word	-18425
+ 1163 00f2 143E      		.word	15892
+ 1164 00f4 1278      		.word	30738
+ 1165 00f6 143E      		.word	15892
+ 1166 00f8 0DF8      		.word	-2035
+ 1167 00fa 033E      		.word	15875
+ 1168 00fc 0EF8      		.word	-2034
+ 1169 00fe 0600      		.word	6
+ 1170 0100 5100      		.word	81
+ 1171 0102 0028      		.word	10240
+ 1172 0104 D524      		.word	9429
+ 1173 0106 0000      		.word	0
+ 1174 0108 2400      		.word	36
+ 1175 010a 88B8      		.word	-18296
+ 1176 010c 1200      		.word	18
+ 1177 010e 0464      		.word	25604
+ 1178 0110 0504      		.word	1029
+ 1179 0112 0000      		.word	0
+ 1180 0114 2400      		.word	36
+ 1181 0116 0028      		.word	10240
+ 1182 0118 5821      		.word	8536
+ 1183 011a 9440      		.word	16532
+ 1184 011c 2400      		.word	36
+ 1185 011e 0024      		.word	9216
+ 1186 0120 0221      		.word	8450
+ 1187 0122 0000      		.word	0
+ 1188 0124 2400      		.word	36
+ 1189 0126 9864      		.word	25752
+ 1190 0128 0308      		.word	2051
+ 1191 012a 56FE      		.word	-426
+ 1192 012c 2400      		.word	36
+ 1193 012e B648      		.word	18614
+ 1194 0130 2400      		.word	36
+ 1195 0132 D64D      		.word	19926
+ 1196 0134 2400      		.word	36
+ 1197 0136 103A      		.word	14864
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 22
+
+
+ 1198 0138 24C0      		.word	-16348
+ 1199 013a F032      		.word	13040
+ 1200 013c 24C0      		.word	-16348
+ 1201 013e 56FE      		.word	-426
+ 1202 0140 2400      		.word	36
+ 1203 0142 B648      		.word	18614
+ 1204 0144 2400      		.word	36
+ 1205 0146 D64D      		.word	19926
+ 1206 0148 2400      		.word	36
+ 1207 014a 8443      		.word	17284
+ 1208 014c 8344      		.word	17539
+ 1209 014e 9663      		.word	25494
+ 1210 0150 8C88      		.word	-30580
+ 1211 0152 00F4      		.word	-3072
+ 1212 0154 D540      		.word	16597
+ 1213 0156 003D      		.word	15616
+ 1214 0158 2480      		.word	-32732
+ 1215 015a 0600      		.word	6
+ 1216 015c 9100      		.word	145
+ 1217 015e 3F00      		.word	63
+ 1218 0160 C3FE      		.word	-317
+ 1219 0162 0600      		.word	6
+ 1220 0164 5300      		.word	83
+ 1221 0166 0131      		.word	12545
+ 1222 0168 2480      		.word	-32732
+ 1223 016a 60FE      		.word	-416
+ 1224 016c 2400      		.word	36
+ 1225 016e BE48      		.word	18622
+ 1226 0170 2400      		.word	36
+ 1227 0172 34A6      		.word	-22988
+ 1228 0174 030C      		.word	3075
+ 1229 0176 2443      		.word	17188
+ 1230 0178 2400      		.word	36
+ 1231 017a 8442      		.word	17028
+ 1232 017c 022C      		.word	11266
+ 1233 017e 0600      		.word	6
+ 1234 0180 1100      		.word	17
+ 1235 0182 0028      		.word	10240
+ 1236 0184 D824      		.word	9432
+ 1237 0186 0031      		.word	12544
+ 1238 0188 2480      		.word	-32732
+ 1239 018a 0600      		.word	6
+ 1240 018c 1150      		.word	20497
+ 1241 018e 0039      		.word	14592
+ 1242 0190 2480      		.word	-32732
+ 1243 0192 0600      		.word	6
+ 1244 0194 1100      		.word	17
+ 1245 0196 0031      		.word	12544
+ 1246 0198 4C98      		.word	-26548
+ 1247 019a 8442      		.word	17028
+ 1248 019c 4C90      		.word	-28596
+ 1249 019e 00F4      		.word	-3072
+ 1250 01a0 8840      		.word	16520
+ 1251 01a2 0028      		.word	10240
+ 1252 01a4 4528      		.word	10309
+ 1253 01a6 0000      		.word	0
+ 1254 01a8 2400      		.word	36
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 23
+
+
+ 1255 01aa F03C      		.word	15600
+ 1256 01ac 4038      		.word	14400
+ 1257 01ae 0930      		.word	12297
+ 1258 01b0 4138      		.word	14401
+ 1259 01b2 0930      		.word	12297
+ 1260 01b4 1038      		.word	14352
+ 1261 01b6 0020      		.word	8192
+ 1262 01b8 0000      		.word	0
+ 1263 01ba 0000      		.word	0
+ 1264 01bc 8827      		.word	10120
+ 1265 01be 0930      		.word	12297
+ 1266 01c0 D01B      		.word	7120
+ 1267 01c2 0028      		.word	10240
+ 1268 01c4 8028      		.word	10368
+ 1269 01c6 0930      		.word	12297
+ 1270 01c8 811B      		.word	7041
+ 1271 01ca F334      		.word	13555
+ 1272 01cc CC1B      		.word	7116
+ 1273 01ce F336      		.word	14067
+ 1274 01d0 0ED8      		.word	-10226
+ 1275 01d2 F436      		.word	14068
+ 1276 01d4 0DD8      		.word	-10227
+ 1277 01d6 F436      		.word	14068
+ 1278 01d8 1258      		.word	22546
+ 1279 01da F136      		.word	14065
+ 1280 01dc 0798      		.word	-26617
+ 1281 01de F136      		.word	14065
+ 1282 01e0 0518      		.word	6149
+ 1283 01e2 F036      		.word	14064
+ 1284 01e4 0398      		.word	-26621
+ 1285 01e6 0534      		.word	13317
+ 1286 01e8 1490      		.word	-28652
+ 1287 01ea F336      		.word	14067
+ 1288 01ec 2400      		.word	36
+ 1289 01ee F236      		.word	14066
+ 1290 01f0 1518      		.word	6165
+ 1291 01f2 0020      		.word	8192
+ 1292 01f4 0000      		.word	0
+ 1293 01f6 F236      		.word	14066
+ 1294 01f8 1798      		.word	-26601
+ 1295 01fa AD80      		.word	-32595
+ 1296 01fc 123E      		.word	15890
+ 1297 01fe 17B8      		.word	-18409
+ 1298 0200 123E      		.word	15890
+ 1299 0202 1538      		.word	14357
+ 1300 0204 053E      		.word	15877
+ 1301 0206 14B8      		.word	-18412
+ 1302 0208 1536      		.word	13845
+ 1303 020a 2400      		.word	36
+ 1304 020c 0000      		.word	0
+ 1305 020e 0A80      		.word	-32758
+ 1306 0210 103E      		.word	15888
+ 1307 0212 0278      		.word	30722
+ 1308 0214 103E      		.word	15888
+ 1309 0216 04F8      		.word	-2044
+ 1310 0218 113E      		.word	15889
+ 1311 021a 1078      		.word	30736
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 24
+
+
+ 1312 021c 143E      		.word	15892
+ 1313 021e 1278      		.word	30738
+ 1314 0220 1329      		.word	10515
+ 1315 0222 80C9      		.word	-13952
+ 1316 0224 143E      		.word	15892
+ 1317 0226 24C0      		.word	-16348
+ 1318 0228 1329      		.word	10515
+ 1319 022a 80C9      		.word	-13952
+ 1320 022c 8840      		.word	16520
+ 1321 022e 4C18      		.word	6220
+ 1322 0230 00F4      		.word	-3072
+ 1323 0232 0540      		.word	16389
+ 1324 0234 0000      		.word	0
+ 1325 0236 C018      		.word	6336
+ 1326 0238 0064      		.word	25600
+ 1327 023a 2400      		.word	36
+ 1328 023c 0000      		.word	0
+ 1329 023e C01B      		.word	7104
+ 1330 0240 0028      		.word	10240
+ 1331 0242 9530      		.word	12437
+ 1332 0244 3000      		.word	48
+ 1333 0246 1003      		.word	784
+ 1334 0248 0028      		.word	10240
+ 1335 024a 803F      		.word	16256
+ 1336 024c 0138      		.word	14337
+ 1337 024e 2440      		.word	16420
+ 1338 0250 0064      		.word	25600
+ 1339 0252 2400      		.word	36
+ 1340 0254 0000      		.word	0
+ 1341 0256 401A      		.word	6720
+ 1342 0258 0028      		.word	10240
+ 1343 025a 5537      		.word	14165
+ 1344 025c 0600      		.word	6
+ 1345 025e D055      		.word	21968
+ 1346 0260 0000      		.word	0
+ 1347 0262 037D      		.word	32003
+ 1348 0264 84B8      		.word	-18300
+ 1349 0266 4C18      		.word	6220
+ 1350 0268 0930      		.word	12297
+ 1351 026a 0538      		.word	14341
+ 1352 026c 0930      		.word	12297
+ 1353 026e 0000      		.word	0
+ 1354 0270 8AFF      		.word	-118
+ 1355 0272 2400      		.word	36
+ 1356 0274 1D29      		.word	10525
+ 1357 0276 007B      		.word	31488
+ 1358 0278 B248      		.word	18610
+ 1359 027a 2400      		.word	36
+ 1360 027c 0000      		.word	0
+ 1361 027e 4118      		.word	6209
+ 1362 0280 0600      		.word	6
+ 1363 0282 1050      		.word	20496
+ 1364 0284 8A40      		.word	16522
+ 1365 0286 44B8      		.word	-18364
+ 1366 0288 0029      		.word	10496
+ 1367 028a 0013      		.word	4864
+ 1368 028c 8840      		.word	16520
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 25
+
+
+ 1369 028e 2400      		.word	36
+ 1370 0290 0030      		.word	12288
+ 1371 0292 CC1B      		.word	7116
+ 1372 0294 1460      		.word	24596
+ 1373 0296 2400      		.word	36
+ 1374 0298 3000      		.word	48
+ 1375 029a 5103      		.word	849
+ 1376 029c 0028      		.word	10240
+ 1377 029e D536      		.word	14037
+ 1378 02a0 0000      		.word	0
+ 1379 02a2 2400      		.word	36
+ 1380 02a4 0600      		.word	6
+ 1381 02a6 1100      		.word	17
+ 1382 02a8 0031      		.word	12544
+ 1383 02aa 2400      		.word	36
+ 1384 02ac 3000      		.word	48
+ 1385 02ae 5103      		.word	849
+ 1386 02b0 0038      		.word	14336
+ 1387 02b2 2400      		.word	36
+ 1388 02b4 0028      		.word	10240
+ 1389 02b6 803F      		.word	16256
+ 1390 02b8 0139      		.word	14593
+ 1391 02ba 2440      		.word	16420
+ 1392 02bc 0064      		.word	25600
+ 1393 02be 2400      		.word	36
+ 1394 02c0 3000      		.word	48
+ 1395 02c2 D003      		.word	976
+ 1396 02c4 0028      		.word	10240
+ 1397 02c6 553F      		.word	16213
+ 1398 02c8 0000      		.word	0
+ 1399 02ca 037D      		.word	32003
+ 1400 02cc 0600      		.word	6
+ 1401 02ce D055      		.word	21968
+ 1402 02d0 84B8      		.word	-18300
+ 1403 02d2 4C18      		.word	6220
+ 1404 02d4 0930      		.word	12297
+ 1405 02d6 0538      		.word	14341
+ 1406 02d8 0930      		.word	12297
+ 1407 02da 0000      		.word	0
+ 1408 02dc 8AFF      		.word	-118
+ 1409 02de 2400      		.word	36
+ 1410 02e0 1D29      		.word	10525
+ 1411 02e2 007B      		.word	31488
+ 1412 02e4 B248      		.word	18610
+ 1413 02e6 2400      		.word	36
+ 1414 02e8 8A40      		.word	16522
+ 1415 02ea CC9B      		.word	-25652
+ 1416 02ec 0000      		.word	0
+ 1417 02ee 4118      		.word	6209
+ 1418 02f0 0028      		.word	10240
+ 1419 02f2 553B      		.word	15189
+ 1420 02f4 0600      		.word	6
+ 1421 02f6 1050      		.word	20496
+ 1422 02f8 9A68      		.word	26778
+ 1423 02fa 2400      		.word	36
+ 1424 02fc 0030      		.word	12288
+ 1425 02fe 2400      		.word	36
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 26
+
+
+ 1426 0300 1460      		.word	24596
+ 1427 0302 2400      		.word	36
+ 1428 0304 3000      		.word	48
+ 1429 0306 9203      		.word	914
+ 1430 0308 0028      		.word	10240
+ 1431 030a 853E      		.word	16005
+ 1432 030c 0600      		.word	6
+ 1433 030e 9100      		.word	145
+ 1434 0310 0600      		.word	6
+ 1435 0312 1100      		.word	17
+ 1436 0314 0000      		.word	0
+ 1437 0316 5218      		.word	6226
+ 1438 0318 0600      		.word	6
+ 1439 031a 5300      		.word	83
+ 1440 031c 80B8      		.word	-18304
+ 1441 031e 0024      		.word	9216
+ 1442 0320 0600      		.word	6
+ 1443 0322 9100      		.word	145
+ 1444 0324 0438      		.word	14340
+ 1445 0326 2480      		.word	-32732
+ 1446 0328 3000      		.word	48
+ 1447 032a 9203      		.word	914
+ 1448 032c 003B      		.word	15104
+ 1449 032e 2400      		.word	36
+ 1450 0330 0139      		.word	14593
+ 1451 0332 2440      		.word	16420
+ 1452 0334 0028      		.word	10240
+ 1453 0336 803F      		.word	16256
+ 1454 0338 013A      		.word	14849
+ 1455 033a 2440      		.word	16420
+ 1456 033c 0138      		.word	14337
+ 1457 033e 2440      		.word	16420
+ 1458 0340 80B8      		.word	-18304
+ 1459 0342 D31B      		.word	7123
+ 1460 0344 F436      		.word	14068
+ 1461 0346 1258      		.word	22546
+ 1462 0348 F136      		.word	14065
+ 1463 034a 1058      		.word	22544
+ 1464 034c F036      		.word	14064
+ 1465 034e 04D8      		.word	-10236
+ 1466 0350 F036      		.word	14064
+ 1467 0352 0258      		.word	22530
+ 1468 0354 0534      		.word	13317
+ 1469 0356 1490      		.word	-28652
+ 1470 0358 F336      		.word	14067
+ 1471 035a 2400      		.word	36
+ 1472 035c F236      		.word	14066
+ 1473 035e 1518      		.word	6165
+ 1474 0360 0020      		.word	8192
+ 1475 0362 0000      		.word	0
+ 1476 0364 F236      		.word	14066
+ 1477 0366 1798      		.word	-26601
+ 1478 0368 3000      		.word	48
+ 1479               		.type	end.2561, @object
+ 1480               		.size	end.2561, 4
+ 1481               	end.2561:
+ 1482 036a 0000 0000 		.skip 4,0
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 27
+
+
+ 1483               		.type	off.2560, @object
+ 1484               		.size	off.2560, 4
+ 1485               	off.2560:
+ 1486 036e 45        		.byte	69
+ 1487 036f 78        		.byte	120
+ 1488 0370 69        		.byte	105
+ 1489 0371 74        		.byte	116
+ 1490               		.type	end.2554, @object
+ 1491               		.size	end.2554, 4
+ 1492               	end.2554:
+ 1493 0372 0000 0000 		.skip 4,0
+ 1494               		.type	on.2553, @object
+ 1495               		.size	on.2553, 3
+ 1496               	on.2553:
+ 1497 0376 53        		.byte	83
+ 1498 0377 EF        		.byte	-17
+ 1499 0378 6E        		.byte	110
+ 1500               		.type	end.2529, @object
+ 1501               		.size	end.2529, 4
+ 1502               	end.2529:
+ 1503 0379 0000 0000 		.skip 4,0
+ 1504               		.type	off.2528, @object
+ 1505               		.size	off.2528, 4
+ 1506               	off.2528:
+ 1507 037d 45        		.byte	69
+ 1508 037e 78        		.byte	120
+ 1509 037f 69        		.byte	105
+ 1510 0380 74        		.byte	116
+ 1511               		.type	on.2527, @object
+ 1512               		.size	on.2527, 3
+ 1513               	on.2527:
+ 1514 0381 53        		.byte	83
+ 1515 0382 EF        		.byte	-17
+ 1516 0383 6E        		.byte	110
+ 1517               		.type	mtcmd.2487, @object
+ 1518               		.size	mtcmd.2487, 8
+ 1519               	mtcmd.2487:
+ 1520 0384 4D        		.byte	77
+ 1521 0385 EA        		.byte	-22
+ 1522 0386 6D        		.byte	109
+ 1523 0387 54        		.byte	84
+ 1524 0388 00        		.byte	0
+ 1525 0389 00        		.byte	0
+ 1526 038a 00        		.byte	0
+ 1527 038b 00        		.byte	0
+ 1528               		.lcomm vs_status,1
+ 1529               		.type	atab, @object
+ 1530               		.size	atab, 437
+ 1531               	atab:
+ 1532 038c 07        		.byte	7
+ 1533 038d 06        		.byte	6
+ 1534 038e 06        		.byte	6
+ 1535 038f 06        		.byte	6
+ 1536 0390 06        		.byte	6
+ 1537 0391 06        		.byte	6
+ 1538 0392 06        		.byte	6
+ 1539 0393 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 28
+
+
+ 1540 0394 06        		.byte	6
+ 1541 0395 06        		.byte	6
+ 1542 0396 06        		.byte	6
+ 1543 0397 06        		.byte	6
+ 1544 0398 06        		.byte	6
+ 1545 0399 06        		.byte	6
+ 1546 039a 06        		.byte	6
+ 1547 039b 06        		.byte	6
+ 1548 039c 06        		.byte	6
+ 1549 039d 06        		.byte	6
+ 1550 039e 06        		.byte	6
+ 1551 039f 06        		.byte	6
+ 1552 03a0 06        		.byte	6
+ 1553 03a1 06        		.byte	6
+ 1554 03a2 06        		.byte	6
+ 1555 03a3 06        		.byte	6
+ 1556 03a4 06        		.byte	6
+ 1557 03a5 06        		.byte	6
+ 1558 03a6 06        		.byte	6
+ 1559 03a7 06        		.byte	6
+ 1560 03a8 06        		.byte	6
+ 1561 03a9 06        		.byte	6
+ 1562 03aa 06        		.byte	6
+ 1563 03ab 06        		.byte	6
+ 1564 03ac 06        		.byte	6
+ 1565 03ad 06        		.byte	6
+ 1566 03ae 06        		.byte	6
+ 1567 03af 06        		.byte	6
+ 1568 03b0 06        		.byte	6
+ 1569 03b1 06        		.byte	6
+ 1570 03b2 06        		.byte	6
+ 1571 03b3 06        		.byte	6
+ 1572 03b4 06        		.byte	6
+ 1573 03b5 06        		.byte	6
+ 1574 03b6 06        		.byte	6
+ 1575 03b7 06        		.byte	6
+ 1576 03b8 06        		.byte	6
+ 1577 03b9 06        		.byte	6
+ 1578 03ba 06        		.byte	6
+ 1579 03bb 06        		.byte	6
+ 1580 03bc 06        		.byte	6
+ 1581 03bd 06        		.byte	6
+ 1582 03be 06        		.byte	6
+ 1583 03bf 06        		.byte	6
+ 1584 03c0 06        		.byte	6
+ 1585 03c1 06        		.byte	6
+ 1586 03c2 06        		.byte	6
+ 1587 03c3 06        		.byte	6
+ 1588 03c4 06        		.byte	6
+ 1589 03c5 07        		.byte	7
+ 1590 03c6 06        		.byte	6
+ 1591 03c7 06        		.byte	6
+ 1592 03c8 06        		.byte	6
+ 1593 03c9 06        		.byte	6
+ 1594 03ca 06        		.byte	6
+ 1595 03cb 06        		.byte	6
+ 1596 03cc 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 29
+
+
+ 1597 03cd 06        		.byte	6
+ 1598 03ce 06        		.byte	6
+ 1599 03cf 06        		.byte	6
+ 1600 03d0 06        		.byte	6
+ 1601 03d1 06        		.byte	6
+ 1602 03d2 06        		.byte	6
+ 1603 03d3 06        		.byte	6
+ 1604 03d4 06        		.byte	6
+ 1605 03d5 06        		.byte	6
+ 1606 03d6 06        		.byte	6
+ 1607 03d7 06        		.byte	6
+ 1608 03d8 06        		.byte	6
+ 1609 03d9 06        		.byte	6
+ 1610 03da 06        		.byte	6
+ 1611 03db 06        		.byte	6
+ 1612 03dc 06        		.byte	6
+ 1613 03dd 06        		.byte	6
+ 1614 03de 06        		.byte	6
+ 1615 03df 06        		.byte	6
+ 1616 03e0 06        		.byte	6
+ 1617 03e1 06        		.byte	6
+ 1618 03e2 06        		.byte	6
+ 1619 03e3 06        		.byte	6
+ 1620 03e4 06        		.byte	6
+ 1621 03e5 06        		.byte	6
+ 1622 03e6 06        		.byte	6
+ 1623 03e7 06        		.byte	6
+ 1624 03e8 06        		.byte	6
+ 1625 03e9 06        		.byte	6
+ 1626 03ea 06        		.byte	6
+ 1627 03eb 06        		.byte	6
+ 1628 03ec 06        		.byte	6
+ 1629 03ed 06        		.byte	6
+ 1630 03ee 06        		.byte	6
+ 1631 03ef 06        		.byte	6
+ 1632 03f0 07        		.byte	7
+ 1633 03f1 06        		.byte	6
+ 1634 03f2 06        		.byte	6
+ 1635 03f3 06        		.byte	6
+ 1636 03f4 06        		.byte	6
+ 1637 03f5 06        		.byte	6
+ 1638 03f6 06        		.byte	6
+ 1639 03f7 06        		.byte	6
+ 1640 03f8 06        		.byte	6
+ 1641 03f9 06        		.byte	6
+ 1642 03fa 06        		.byte	6
+ 1643 03fb 06        		.byte	6
+ 1644 03fc 06        		.byte	6
+ 1645 03fd 06        		.byte	6
+ 1646 03fe 06        		.byte	6
+ 1647 03ff 06        		.byte	6
+ 1648 0400 06        		.byte	6
+ 1649 0401 06        		.byte	6
+ 1650 0402 06        		.byte	6
+ 1651 0403 06        		.byte	6
+ 1652 0404 06        		.byte	6
+ 1653 0405 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 30
+
+
+ 1654 0406 06        		.byte	6
+ 1655 0407 06        		.byte	6
+ 1656 0408 06        		.byte	6
+ 1657 0409 06        		.byte	6
+ 1658 040a 06        		.byte	6
+ 1659 040b 06        		.byte	6
+ 1660 040c 06        		.byte	6
+ 1661 040d 06        		.byte	6
+ 1662 040e 06        		.byte	6
+ 1663 040f 06        		.byte	6
+ 1664 0410 06        		.byte	6
+ 1665 0411 06        		.byte	6
+ 1666 0412 06        		.byte	6
+ 1667 0413 06        		.byte	6
+ 1668 0414 06        		.byte	6
+ 1669 0415 06        		.byte	6
+ 1670 0416 06        		.byte	6
+ 1671 0417 06        		.byte	6
+ 1672 0418 06        		.byte	6
+ 1673 0419 06        		.byte	6
+ 1674 041a 06        		.byte	6
+ 1675 041b 06        		.byte	6
+ 1676 041c 06        		.byte	6
+ 1677 041d 06        		.byte	6
+ 1678 041e 06        		.byte	6
+ 1679 041f 06        		.byte	6
+ 1680 0420 06        		.byte	6
+ 1681 0421 06        		.byte	6
+ 1682 0422 06        		.byte	6
+ 1683 0423 06        		.byte	6
+ 1684 0424 06        		.byte	6
+ 1685 0425 06        		.byte	6
+ 1686 0426 06        		.byte	6
+ 1687 0427 06        		.byte	6
+ 1688 0428 06        		.byte	6
+ 1689 0429 06        		.byte	6
+ 1690 042a 06        		.byte	6
+ 1691 042b 06        		.byte	6
+ 1692 042c 06        		.byte	6
+ 1693 042d 06        		.byte	6
+ 1694 042e 06        		.byte	6
+ 1695 042f 06        		.byte	6
+ 1696 0430 06        		.byte	6
+ 1697 0431 06        		.byte	6
+ 1698 0432 06        		.byte	6
+ 1699 0433 06        		.byte	6
+ 1700 0434 06        		.byte	6
+ 1701 0435 06        		.byte	6
+ 1702 0436 06        		.byte	6
+ 1703 0437 06        		.byte	6
+ 1704 0438 06        		.byte	6
+ 1705 0439 06        		.byte	6
+ 1706 043a 06        		.byte	6
+ 1707 043b 06        		.byte	6
+ 1708 043c 06        		.byte	6
+ 1709 043d 06        		.byte	6
+ 1710 043e 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 31
+
+
+ 1711 043f 06        		.byte	6
+ 1712 0440 06        		.byte	6
+ 1713 0441 06        		.byte	6
+ 1714 0442 06        		.byte	6
+ 1715 0443 06        		.byte	6
+ 1716 0444 06        		.byte	6
+ 1717 0445 06        		.byte	6
+ 1718 0446 06        		.byte	6
+ 1719 0447 06        		.byte	6
+ 1720 0448 06        		.byte	6
+ 1721 0449 06        		.byte	6
+ 1722 044a 06        		.byte	6
+ 1723 044b 06        		.byte	6
+ 1724 044c 06        		.byte	6
+ 1725 044d 06        		.byte	6
+ 1726 044e 06        		.byte	6
+ 1727 044f 06        		.byte	6
+ 1728 0450 06        		.byte	6
+ 1729 0451 06        		.byte	6
+ 1730 0452 06        		.byte	6
+ 1731 0453 06        		.byte	6
+ 1732 0454 06        		.byte	6
+ 1733 0455 06        		.byte	6
+ 1734 0456 06        		.byte	6
+ 1735 0457 06        		.byte	6
+ 1736 0458 06        		.byte	6
+ 1737 0459 06        		.byte	6
+ 1738 045a 06        		.byte	6
+ 1739 045b 06        		.byte	6
+ 1740 045c 06        		.byte	6
+ 1741 045d 06        		.byte	6
+ 1742 045e 06        		.byte	6
+ 1743 045f 06        		.byte	6
+ 1744 0460 06        		.byte	6
+ 1745 0461 06        		.byte	6
+ 1746 0462 06        		.byte	6
+ 1747 0463 06        		.byte	6
+ 1748 0464 06        		.byte	6
+ 1749 0465 06        		.byte	6
+ 1750 0466 06        		.byte	6
+ 1751 0467 06        		.byte	6
+ 1752 0468 06        		.byte	6
+ 1753 0469 06        		.byte	6
+ 1754 046a 06        		.byte	6
+ 1755 046b 06        		.byte	6
+ 1756 046c 06        		.byte	6
+ 1757 046d 06        		.byte	6
+ 1758 046e 06        		.byte	6
+ 1759 046f 06        		.byte	6
+ 1760 0470 06        		.byte	6
+ 1761 0471 06        		.byte	6
+ 1762 0472 06        		.byte	6
+ 1763 0473 06        		.byte	6
+ 1764 0474 06        		.byte	6
+ 1765 0475 06        		.byte	6
+ 1766 0476 06        		.byte	6
+ 1767 0477 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 32
+
+
+ 1768 0478 06        		.byte	6
+ 1769 0479 06        		.byte	6
+ 1770 047a 06        		.byte	6
+ 1771 047b 06        		.byte	6
+ 1772 047c 06        		.byte	6
+ 1773 047d 06        		.byte	6
+ 1774 047e 06        		.byte	6
+ 1775 047f 06        		.byte	6
+ 1776 0480 06        		.byte	6
+ 1777 0481 06        		.byte	6
+ 1778 0482 06        		.byte	6
+ 1779 0483 06        		.byte	6
+ 1780 0484 06        		.byte	6
+ 1781 0485 06        		.byte	6
+ 1782 0486 06        		.byte	6
+ 1783 0487 06        		.byte	6
+ 1784 0488 06        		.byte	6
+ 1785 0489 07        		.byte	7
+ 1786 048a 06        		.byte	6
+ 1787 048b 06        		.byte	6
+ 1788 048c 06        		.byte	6
+ 1789 048d 06        		.byte	6
+ 1790 048e 06        		.byte	6
+ 1791 048f 06        		.byte	6
+ 1792 0490 06        		.byte	6
+ 1793 0491 06        		.byte	6
+ 1794 0492 06        		.byte	6
+ 1795 0493 06        		.byte	6
+ 1796 0494 06        		.byte	6
+ 1797 0495 06        		.byte	6
+ 1798 0496 06        		.byte	6
+ 1799 0497 06        		.byte	6
+ 1800 0498 06        		.byte	6
+ 1801 0499 06        		.byte	6
+ 1802 049a 06        		.byte	6
+ 1803 049b 06        		.byte	6
+ 1804 049c 06        		.byte	6
+ 1805 049d 06        		.byte	6
+ 1806 049e 06        		.byte	6
+ 1807 049f 06        		.byte	6
+ 1808 04a0 06        		.byte	6
+ 1809 04a1 06        		.byte	6
+ 1810 04a2 06        		.byte	6
+ 1811 04a3 06        		.byte	6
+ 1812 04a4 06        		.byte	6
+ 1813 04a5 06        		.byte	6
+ 1814 04a6 06        		.byte	6
+ 1815 04a7 06        		.byte	6
+ 1816 04a8 06        		.byte	6
+ 1817 04a9 06        		.byte	6
+ 1818 04aa 06        		.byte	6
+ 1819 04ab 06        		.byte	6
+ 1820 04ac 06        		.byte	6
+ 1821 04ad 06        		.byte	6
+ 1822 04ae 06        		.byte	6
+ 1823 04af 06        		.byte	6
+ 1824 04b0 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 33
+
+
+ 1825 04b1 06        		.byte	6
+ 1826 04b2 06        		.byte	6
+ 1827 04b3 06        		.byte	6
+ 1828 04b4 06        		.byte	6
+ 1829 04b5 06        		.byte	6
+ 1830 04b6 06        		.byte	6
+ 1831 04b7 06        		.byte	6
+ 1832 04b8 06        		.byte	6
+ 1833 04b9 06        		.byte	6
+ 1834 04ba 06        		.byte	6
+ 1835 04bb 06        		.byte	6
+ 1836 04bc 06        		.byte	6
+ 1837 04bd 06        		.byte	6
+ 1838 04be 06        		.byte	6
+ 1839 04bf 06        		.byte	6
+ 1840 04c0 06        		.byte	6
+ 1841 04c1 06        		.byte	6
+ 1842 04c2 06        		.byte	6
+ 1843 04c3 06        		.byte	6
+ 1844 04c4 06        		.byte	6
+ 1845 04c5 06        		.byte	6
+ 1846 04c6 06        		.byte	6
+ 1847 04c7 06        		.byte	6
+ 1848 04c8 06        		.byte	6
+ 1849 04c9 06        		.byte	6
+ 1850 04ca 06        		.byte	6
+ 1851 04cb 06        		.byte	6
+ 1852 04cc 06        		.byte	6
+ 1853 04cd 06        		.byte	6
+ 1854 04ce 06        		.byte	6
+ 1855 04cf 06        		.byte	6
+ 1856 04d0 06        		.byte	6
+ 1857 04d1 06        		.byte	6
+ 1858 04d2 06        		.byte	6
+ 1859 04d3 06        		.byte	6
+ 1860 04d4 06        		.byte	6
+ 1861 04d5 06        		.byte	6
+ 1862 04d6 06        		.byte	6
+ 1863 04d7 06        		.byte	6
+ 1864 04d8 06        		.byte	6
+ 1865 04d9 06        		.byte	6
+ 1866 04da 06        		.byte	6
+ 1867 04db 06        		.byte	6
+ 1868 04dc 06        		.byte	6
+ 1869 04dd 06        		.byte	6
+ 1870 04de 06        		.byte	6
+ 1871 04df 06        		.byte	6
+ 1872 04e0 06        		.byte	6
+ 1873 04e1 06        		.byte	6
+ 1874 04e2 06        		.byte	6
+ 1875 04e3 06        		.byte	6
+ 1876 04e4 06        		.byte	6
+ 1877 04e5 06        		.byte	6
+ 1878 04e6 06        		.byte	6
+ 1879 04e7 06        		.byte	6
+ 1880 04e8 06        		.byte	6
+ 1881 04e9 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 34
+
+
+ 1882 04ea 06        		.byte	6
+ 1883 04eb 06        		.byte	6
+ 1884 04ec 06        		.byte	6
+ 1885 04ed 06        		.byte	6
+ 1886 04ee 06        		.byte	6
+ 1887 04ef 06        		.byte	6
+ 1888 04f0 06        		.byte	6
+ 1889 04f1 06        		.byte	6
+ 1890 04f2 06        		.byte	6
+ 1891 04f3 06        		.byte	6
+ 1892 04f4 06        		.byte	6
+ 1893 04f5 06        		.byte	6
+ 1894 04f6 06        		.byte	6
+ 1895 04f7 06        		.byte	6
+ 1896 04f8 06        		.byte	6
+ 1897 04f9 06        		.byte	6
+ 1898 04fa 06        		.byte	6
+ 1899 04fb 06        		.byte	6
+ 1900 04fc 06        		.byte	6
+ 1901 04fd 06        		.byte	6
+ 1902 04fe 06        		.byte	6
+ 1903 04ff 06        		.byte	6
+ 1904 0500 06        		.byte	6
+ 1905 0501 06        		.byte	6
+ 1906 0502 06        		.byte	6
+ 1907 0503 06        		.byte	6
+ 1908 0504 06        		.byte	6
+ 1909 0505 06        		.byte	6
+ 1910 0506 06        		.byte	6
+ 1911 0507 06        		.byte	6
+ 1912 0508 06        		.byte	6
+ 1913 0509 06        		.byte	6
+ 1914 050a 06        		.byte	6
+ 1915 050b 06        		.byte	6
+ 1916 050c 06        		.byte	6
+ 1917 050d 06        		.byte	6
+ 1918 050e 06        		.byte	6
+ 1919 050f 06        		.byte	6
+ 1920 0510 06        		.byte	6
+ 1921 0511 06        		.byte	6
+ 1922 0512 06        		.byte	6
+ 1923 0513 06        		.byte	6
+ 1924 0514 06        		.byte	6
+ 1925 0515 06        		.byte	6
+ 1926 0516 06        		.byte	6
+ 1927 0517 06        		.byte	6
+ 1928 0518 06        		.byte	6
+ 1929 0519 06        		.byte	6
+ 1930 051a 06        		.byte	6
+ 1931 051b 06        		.byte	6
+ 1932 051c 06        		.byte	6
+ 1933 051d 06        		.byte	6
+ 1934 051e 06        		.byte	6
+ 1935 051f 06        		.byte	6
+ 1936 0520 06        		.byte	6
+ 1937 0521 06        		.byte	6
+ 1938 0522 06        		.byte	6
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 35
+
+
+ 1939 0523 06        		.byte	6
+ 1940 0524 06        		.byte	6
+ 1941 0525 06        		.byte	6
+ 1942 0526 06        		.byte	6
+ 1943 0527 06        		.byte	6
+ 1944 0528 06        		.byte	6
+ 1945 0529 06        		.byte	6
+ 1946 052a 06        		.byte	6
+ 1947 052b 06        		.byte	6
+ 1948 052c 06        		.byte	6
+ 1949 052d 06        		.byte	6
+ 1950 052e 06        		.byte	6
+ 1951 052f 06        		.byte	6
+ 1952 0530 06        		.byte	6
+ 1953 0531 06        		.byte	6
+ 1954 0532 06        		.byte	6
+ 1955 0533 06        		.byte	6
+ 1956 0534 06        		.byte	6
+ 1957 0535 06        		.byte	6
+ 1958 0536 06        		.byte	6
+ 1959 0537 06        		.byte	6
+ 1960 0538 06        		.byte	6
+ 1961 0539 06        		.byte	6
+ 1962 053a 06        		.byte	6
+ 1963 053b 06        		.byte	6
+ 1964 053c 06        		.byte	6
+ 1965 053d 06        		.byte	6
+ 1966 053e 06        		.byte	6
+ 1967 053f 06        		.byte	6
+ 1968 0540 06        		.byte	6
+ 1969               		.lcomm g_vs_type,2
+ 1970               	/* File "source/vs10xx.c": code  918 = 0x0396 ( 730), prologues  86, epilogues 102 */
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 36
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 vs10xx.c
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:3      *ABS*:0000003f __SREG__
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:4      *ABS*:0000003e __SP_H__
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:5      *ABS*:0000003d __SP_L__
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:13     .text:00000000 VsPlayerInterrupts
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:51     .text:0000002a VsPlayerStop
+                             .bss:00000000 vs_status
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:73     .text:0000004a VsGetStatus
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:85     .text:00000052 VsGetType
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1528   .bss:00000001 g_vs_type
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:97     .text:0000005c VsGetTypeHex
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:108    .text:00000066 VsSdiWrite_P
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:148    .text:000000a0 VsBeepStop
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1485   .progmem.data:0000036e off.2560
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1481   .progmem.data:0000036a end.2561
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:176    .text:000000d0 VsSdiWrite
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:212    .text:00000108 VsRegWrite
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:253    .text:0000015a VsSetVolume
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:291    .text:0000019a VsPlayerSetMode
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:319    .text:000001c6 VsBeepStartRaw
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1496   .progmem.data:00000376 on.2553
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1492   .progmem.data:00000372 end.2554
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:375    .text:00000230 VsBeepStart
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:399    .text:00000250 VsBeep
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1513   .progmem.data:00000381 on.2527
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1502   .progmem.data:00000379 end.2529
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1506   .progmem.data:0000037d off.2528
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:492    .text:0000030c VsPlayerReset
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:518    .text:00000338 VsRegRead
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:566    .text:00000398 VsGetVolume
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:591    .text:000003be VsRegInfo
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:617    .text:000003e6 VsStreamValid
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:696    .text:0000046a VsPlayerInit
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:778    .text:0000051a VsPlayerFeed
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:905    .text:00000604 VsPlayerKick
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1041   .progmem.data:00000000 dtab
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1531   .progmem.data:0000038c atab
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:990    .text:0000068e VsMemoryTest
+C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s:1519   .progmem.data:00000384 mtcmd.2487
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+SPIselect
+SPIputByte
+SPIdeselect
+SPIgetmode
+SPImode
+NutDelay
+NutSleep
+SPIgetByte
+sig_INTERRUPT6
+NutRegisterIrqHandler
+NutIrqSetMode
+GAS LISTING C:\Users\mauro\AppData\Local\Temp\/cc3QWSOY.s 			page 37
+
+
+NutSegBufReadCommit
+NutSegBufReadRequest
+NutSegBufReadLast
+__divmodhi4
+WatchDogRestart
